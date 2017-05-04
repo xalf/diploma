@@ -1,0 +1,14 @@
+<ul class="nav navbar-nav">
+	<li ng-hide="navvm.isLoggedIn">
+		<a href="/login?page={{navvm.currentPage}}">Войти</a>
+	</li>
+	<li ng-hide="navvm.isLoggedIn">
+		<a href="/register?page={{navvm.currentPage}}">Зарегистрироваться</a>
+	</li>
+	<li ng-show="navvm.isLoggedIn">
+		<a href="/dashboard">{{navvm.currentUser.name}}</a>
+	</li>
+	<li ng-show="navvm.isLoggedIn">
+		<a href="" ng-click="navvm.logout()">Выйти</a>
+	</li>
+</ul>

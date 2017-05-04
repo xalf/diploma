@@ -1,0 +1,67 @@
+<div class="container" ng-controller="homeCtrl">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<nav-login></nav-login>
+	</nav>
+	<div class="container">	
+		<div class="row">
+			<div class="col-md-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">Фильтрация</h2>
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="filter">Найти кафе</label>
+							<input type="text" id="filter" name="filter" ng-model="vm.textFilter" class="form-controll">
+						</div>
+						<div class="form-group">
+							<label for="filter">Выберите фильтр</label>
+							<select id="rating" name="rating" ng-model="vm.selectFilter" class="form-control input-sm">
+								<option value="rating">Рейтинг</option>
+								<option value="check">Средний чек</option>
+								<option value="order">Популярность</option>
+								<option value="create">Новое</option>
+							  </select>
+						</div>
+						<div class="form-group">
+							<label for="filter">Выберите кухню</label>
+							<select id="rating" name="rating" ng-model="vm.textFilter" class="form-control input-sm">
+								<option ng-repeat="cuisineName in vm.cuisineNames" value="{{cuisineName}}">{{cuisineName}}</option>
+								<option value="">Любая</option>
+							  </select>
+						</div>
+						<div class="form-group">
+							<label for="filter">Выберите способ оплаты</label>
+							<select id="rating" name="rating" ng-model="vm.textFilter" class="form-control input-sm">
+								<option ng-repeat="paymentName in vm.paymentNames" value="{{paymentName}}">{{paymentName}}</option>
+								<option value="">Любой</option>
+							  </select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<h1 class="page-header">
+					<a href="/">{{pageInfo.title}}</a>
+				</h1>
+				<div class="error">{{vm.message}}</div>
+				<div class="row list-group">
+					<div class="list-group-item" ng-repeat="cafe in vm.data.cafes | filter:vm.textFilter | orderBy: vm.selectFilter">
+						<h4>
+							<a href="/cafe/{{cafe._id}}">{{cafe.name}}</a>
+							<small rating-stars rating="cafe.rating"></small>
+						</h4>
+						<p>Адрес: {{cafe.address}}</p>
+						<p>Кухня: {{cafe.cuisine}}</p>
+						<p>Средний чек: {{cafe.check}}р.</p>
+						<p>Способы оплаты: 
+							<span ng-repeat="payment in cafe.payments">
+								{{payment}}
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

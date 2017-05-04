@@ -1,7 +1,19 @@
 doctype html
-html
+html(ng-app="cafeClientApp")
   head
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/bower_components/stylesheets/style.css')
   body
-    block content
+        div(ng-view)
+            block content
+  script(src='/bower_components/angular/angular.min.js')
+
+  script(src='/bower_components/angular-route/angular-route.min.js')
+  script(src='/app.js')
+  script(src='/common/services/cafeData.js')
+  script(src='/common/directive/ratingStars/rating-stars.js')
+  script(src='/home/home.controller.js')
+  script(src='/bower_components/jquery/dist/jquery.min.js')
+  script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')

@@ -1,0 +1,19 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-sm-12">
+			<p class="lead">Если вы ущё не зарегистрированы: <a href="/#register&page={{vm.returnPage}}">Регистрация в приложении</a></p>
+			<form ng-submit="vm.onSubmit()">
+				<div class="alert alert-danger" role="alert" ng-show="vm.formError">{{vm.formError}}</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" id="email" placeholder="Email" ng-model="vm.credentials.email">
+				</div>
+				<div class="form-group">
+					<label for="password">Пароль</label>
+					<input type="password" class="form-control" id="password" placeholder="Пароль" ng-model="vm.credentials.password">
+				</div>
+				<button type="submit" class="btn btn-default">Войти</button>
+			</form>
+		</div>
+	</div>
+</div>

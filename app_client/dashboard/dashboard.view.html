@@ -1,0 +1,33 @@
+<div ng-controller="dashboardCtrl">
+	<nav class="navbar navbar-default">
+		<nav-login></nav-login>
+	</nav>
+	<div class="container" ng-show="vm.isLog">	
+		<div class="row">
+			<div class="col-md-3">
+				<img src="{{vm.user.img}}" alt="..." class="img-circle">
+				<h2 class="center-block">
+					{{vm.user.name}}
+					<smal>{{vm.user.email}}</smal>
+				</h2>
+				<p><a href="" ng-click="vm.updateProfile()">Изменить профиль</a> / <a ng-click="vm.deleteProfile()" href="">Удалить профиль</a></p>
+			</div>
+			<div class="col-md-9">
+				<h2>Заказанные столики</h2>
+				<table class="table table-striped">
+					<tr ng-repeat="order in vm.orders | orderBy: order.date">
+						<td>
+							<h4>{{order.cafe}}</h4>
+							<small>столик №{{order.table.number}} на {{order.table.numberOfSeats}} человек</small>
+						</td>
+						<td>
+							<h4>{{order.date | date: 'H:m'}} - {{order.dateEnd | date:'H:m'}}</h4>
+							<small>{{order.date | date: 'MM.dd' }}</small>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div role="alert" ng-hide="vm.isLog" class="alert alert-danger">Вы не вошли в приложение: <a href="/login?path=/dashboard">Войти</a></div>
+</div>

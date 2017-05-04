@@ -1,0 +1,51 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.page-header: .col-lg-12
+      h1= cafe.name
+      p.rating
+        +outputRating(cafe.rating)
+  .row
+    .col-xs-12.col-md-9
+      .row
+        .col-xs-12.col-sm-6
+            .panel.panel-primary
+                .panel-heading
+                    h2.panel-title Информация
+                .panel-body
+                    p Адрес: #{cafe.address}
+                    p Кухня: #{cafe.cuisine}
+                    p Средний чек: #{cafe.check}
+                    p Способы оплаты: 
+                        each payment in cafe.payments
+                            =payment + " "
+        .col-xs-12.col-sm-6
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Часы работы
+            .panel-body
+              each time in cafe.timetable
+                p
+                  | #{time.days}:
+                  | #{time.open_hour}:#{time.open_minuts} - 
+                  | #{time.close_hour}:#{time.close_minuts}
+      .row
+        .col-xs-12
+          .panel.panel-primary.review-panel
+            .panel-heading.clearfix
+              a.btn.btn-default.pull-right(href="/cafe/#{cafe._id}/review/add") Add review
+              h2.panel-title Customer reviews
+            .panel-body.review-container
+              each review in cafe.reviews
+                .row
+                  .review
+                    .well.well-sm.review-header
+                      span.rating
+                        +outputRating(review.rating)
+                      span.reviewAuthor #{review.author}
+                      small.reviewTimestamp.pull-right
+                          +formatDate(review.createOn)
+                    .col-xs-12
+                      p !{(review.reviewText).replace(/\n/g, '<br/>')}

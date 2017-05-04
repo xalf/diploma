@@ -1,0 +1,72 @@
+<div class="container" ng-controller="cafeCtrl">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<nav-login></nav-login>
+	</nav>
+	
+<div class="row page-header col-lg-12">
+      <h1>{{vm.cafe.name}}</h1>
+      <small rating-stars rating="vm.cafe.rating"></small>
+  </div>
+  <div class="row">	
+    <div class="col-xs-12 col-md-9">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Информация</h2>
+                </div>
+                <div class="panel-body">
+                    <p>Адрес: {{vm.cafe.address}}</p>
+                    <p>Кухня: {{vm.cafe.cuisine}}</p>
+                    <p>Средний чек: {{vm.cafe.check}}</p>
+                    <p>Способы оплаты:</p> 	
+                       <ul>
+                       	<li ng-repeat="payment in vm.cafe.payments">
+                       		{{payment}}
+                       	</li>
+                       </ul>
+                 </div>
+        	</div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h2 class="panel-title">Часы работы</h2>
+            </div>
+            <div class="panel-body">
+             <p ng-repeat="time in vm.cafe.timetable | filter: !time.isChoice">
+                  {{time.name}}:
+                  {{time.openTime | date: 'hh:mm'}} - {{time.closeTime | date: 'hh:mm'}}
+             </p>
+            </div>
+            </div>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-primary review-panel">
+            <div class="panel-heading clearfix">
+              <a class="btn btn-default pull-right" ng-click="vm.popupReviewForm()" ng-show="vm.isLoggedIn">Добавить отзыв</a>
+              <a class="btn btn-default pull-right" ng-hide="vm.isLoggedIn" href="/login?page={{vm.currentPath}}">Войти и добавить отзыв</a>
+              <h2 class="panel-title">Отзывы</h2>
+            </div>
+            <div class="panel-body review-container">
+                <div class="row" ng-repeat="review in vm.cafe.reviews | orderBy: 'createOn': false">
+                  <div class="review">
+                    <div class="well well-sm review-header">
+                      <small rating-stars rating="review.rating"></small>
+                      <span class="reviewAuthor">{{review.author}}</span>
+					  <button type="button" ng-click="vm.removeReview(review._id)" class="close pull-rignt" ng-show="vm.userName === review.author"><span aria-hidden="true">×</span></button>
+                      <small class="reviewTimestamp pull-right">{{review.createOn | date : 'd MMMM yyyy'}}</small>
+                    </div>
+                    <div class="col-xs-12">
+                      <p>{{review.reviewText}}</p>
+                      </div>
+                    </div>
+                 </div>
+               </div>     
+		  	</div>
+         	</div>
+         </div>
+	</div>
+</div>

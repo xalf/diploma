@@ -1,6 +1,45 @@
 extends layout
 
+mixin outputRating(rating)
+	- for(var i = 0; i < rating; i++)
+		span.glyphicon.glyphicon-star
+	- for(i = rating; i < 5; i++)
+		span.glyphicon.glyphicon-star-empty
+	
+
 block content
-  h1= title
-  p Welcome to #{title}
-  p Все работает
+	nav.navbar.navbar-default.navbar-fixed-top
+		ul.nav.navbar-nav
+			li
+				a Новое
+			li
+				a Популярное
+			li
+				a Кухня
+			li
+				a Способ оплаты
+			li
+				a Рейтинг
+			li
+				a Чек
+	div.container(ng-controller="cafeListCtrl")
+		div.row
+			div.col-md-3
+				label(for="filter") Найти кафе
+				input#filter(type="text", name="filter", ng-model="textFilter")
+			div.col-md-9
+				h1.page-header
+					a(href="/")= pageInfo.title
+				.error {{message}}
+				div.row.list-group
+					.list-group-item(ng-repeat="cafe in data.cafes | filter:textFilter")
+						h4
+							a(href="/cafe/{{cafe._id}}") {{cafe.name}}
+							small(rating-stars, rating="cafe.rating")
+						p Адрес: {{cafe.address}}
+						p Кухня: {{cafe.cuisine}}
+						p Средний чек: {{cafe.check}}р.
+						p Способы оплаты: 
+							span(ng-repeat="payment in cafe.payments")
+								| {{payment}}
+

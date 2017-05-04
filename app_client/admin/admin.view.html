@@ -1,0 +1,123 @@
+<div class="container">
+  <h1>Панель администратора</h1>
+   <uib-tabset>
+    <uib-tab index="0" heading="Заказы">
+    	<div class="row">
+    		<div class="col-md-6">
+    			<h3>Заказы</h3>
+    			<table class="table table-striped">
+    				<tr>
+    					<th>Дата</th>
+    					<th>Время</th>
+    					<th>Номер столика</th>
+    					<th>Заказчик</th>
+    				</tr>
+    				<tr ng-repeat="order in vm.orders">
+    					<td>{{order.date | date: 'MM.dd' }}</td>
+    					<td>{{order.date | date: 'H:m'}} - {{order.dateEnd | date:'H:m'}}</td>
+    					<td>{{order.table.number}}</td>
+    					<td>{{order.customer}}</td>
+    				</tr>
+    			</table>
+    		</div>
+    	</div>
+    </uib-tab>
+    <uib-tab index="1" heading="Информация о кафе">
+    	<h3>Информация о кафе</h3>
+    	<form role="form" ng-submit="vm.onSubmit()">
+		  <div class="form-group">
+			<label>Название</label>
+			<input type="text" class="form-control" placeholder="Название" ng-model="vm.cafeForm.name">
+		  </div>
+		  <div class="form-group">
+			<label>Адрес</label>
+			<input type="text" class="form-control" placeholder="Адрес" ng-model="vm.cafeForm.address">
+		  </div>
+		  <div class="form-group">
+			<label>Средний чек</label>
+			<input type="text" class="form-control" placeholder="Средний чек"  ng-model="vm.cafeForm.check">
+		  </div>
+		  <div class="form-group">
+		    <label for="filter">Выберите кухню</label>
+			<select id="rating" name="rating" ng-model="vm.cafeForm.cuisine" class="form-control input-sm">
+				<option ng-repeat="cuisineName in vm.cuisineNames" value="{{cuisineName}}">{{cuisineName}}</option>
+				<option value="">Нет</option>
+			</select>
+		  </div>
+		  <div class="form-group">
+			<label for="filter">Выберите способ оплаты</label>
+			<select id="rating" name="rating"  ng-model="vm.cafeForm.payments" class="form-control input-sm" multiple size="3">
+				<option ng-repeat="paymentName in vm.paymentNames" value="{{paymentName}}">{{paymentName}}</option>
+				<option value="">Любой</option>
+			  </select>
+		  </div>
+		  <div class="well">
+		  	<h4>Добавить контакт</h4>
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<input type="checkbox" ng-model="vm.newContact.isLink">
+						<label>Тип контакта</label>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label>Название</label>
+						<input type="text" class="form-control" ng-model="vm.newContact.name">
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label>Значение</label>
+						<input type="{{vm.newContact.isLink?url:text}}" class="form-control" ng-model="vm.newContact.value">
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-default" ng-click="vm.addContact()" type="button">Добавить</button>
+			<h4>Список контактов</h4>
+			<ul class="list-group">
+			  <li class="list-group-item" ng-repeat="contact in vm.cafeForm.contacts">
+			  	<a ng-show="contact.isLink" href="{{contact.value}}">{{contact.key}}</a>
+			  	<span ng-hide="contact.isLink" >{{contact.name}} - {{contact.value}}</span>
+			  	<span class="glyphicon glyphicon-remove pull-right" ng-click="vm.deleteContact(contact)"></span>
+			  </li>
+			</ul>
+		  </div>
+		  <div class="well">
+		  	<h4>Установить время работы</h4>
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label>День недели</label>
+						<select ng-model="vm.newTimetable.day" multiple  size="3" class="form-control">
+							<option ng-repeat="day in vm.cafeForm.days | filter: day.isChoice" value="{{day.number}}">{{day.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label>Время открытия</label>
+						<input type="time" class="form-control" ng-model="vm.newTimetable.openTime">
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="form-group">
+						<label>Время закрытия</label>
+						<input type="time" class="form-control" ng-model="vm.newTimetable.closeTime">
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-default" ng-click="vm.addInTimetable()" type="button">Добавить</button>
+			<h4>Расписание</h4>
+			<ul class="list-group">
+			  <li class="list-group-item" ng-repeat="day in vm.cafeForm.days | filter: !day.isChoice">
+			  	{{day.name}}: {{day.openTime | date: 'H:mm'}} - {{day.closeTime | date: 'H:mm'}}
+			  	<span class="glyphicon glyphicon-remove pull-right" ng-click="vm.deleteDay(day)"></span>
+			  </li>
+			</ul>
+		  </div>
+		  <button class="btn btn-default" type="submit">Отправить</button>
+		</form>
+    </uib-tab>
+  </uib-tabset>
+ </div>
