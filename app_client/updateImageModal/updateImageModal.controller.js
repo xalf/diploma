@@ -3,7 +3,7 @@
 		var vm = this;
 		
 		var uploader = vm.uploader = new FileUploader({
-            url: '/api/user/image',
+            url: '/api/user/client/image',
 			headers: {
 				Authorization: 'Bearer ' + authentication.getToken()
 			}

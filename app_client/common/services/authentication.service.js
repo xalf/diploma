@@ -27,12 +27,19 @@
 			$window.localStorage.removeItem('token');
 		}
 		
-		var isLoggedIn = function(){
+		var getInfoByToken = function(token){
+			return JSON.parse($window.atob(token.split('.')[1]));
+		} 
+		
+		var isLoggedIn = function(type){
 			var token = getToken();
 			
 			if(token && token!=='undefined'){
-				var payload = JSON.parse($window.atob(token.split('.')[1]));
-				return payload.exp > Date.now() / 1000;
+				var payload = getInfoByToken(token);
+				if(type === payload.type)
+					return payload.exp > Date.now() / 1000;
+				else
+					return false;
 			} else {
 				return false;
 			}
@@ -40,20 +47,24 @@
 	
 		
 		var currentUser = function(){
-			if(isLoggedIn()){
-				var token = getToken();
-				
-				var payload = JSON.parse($window.atob(token.split('.')[1]));
-				return {
-					email: payload.email,
-					name: payload.name,
-					_id: payload._id
-				};
+			var token = getToken();
+			if(token && token!=='undefined'){
+				var payload = getInfoByToken(token);
+				if(isLoggedIn(payload.type)){
+					return {
+						type: payload.type,
+						email: payload.email,
+						name: payload.name,
+						_id: payload._id
+					};
+				}
 			}
 		};
 		
 		var deleteUser = function(){
-			if(isLoggedIn()){
+			var token = getToken();
+			var payload = getInfoByToken(token);
+			if(isLoggedIn(payload.type)){
 				return $http.delete('/api/user', {
 					headers: {
 						Authorization: 'Bearer ' + getToken()
@@ -63,7 +74,15 @@
 		}
 		
 		var getUserInfo = function(){
-			return $http.get('/api/user', {
+			return $http.get('/api/user/client', {
+					headers: {
+						Authorization: 'Bearer ' + getToken()
+					}
+				});
+		};
+		
+		var getAdminInfo = function(){
+			return $http.get('/api/user/admin', {
 					headers: {
 						Authorization: 'Bearer ' + getToken()
 					}
@@ -80,7 +99,8 @@
 			isLoggedIn: isLoggedIn,
 			currentUser: currentUser,
 			deleteUser: deleteUser,
-			getUserInfo: getUserInfo
+			getUserInfo: getUserInfo,
+			getAdminInfo: getAdminInfo
 		};
 	}
 	

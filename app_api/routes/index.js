@@ -8,12 +8,14 @@ var auth = jwt({
 var cafeCtrl = require('../controllers/cafe');
 var reviewsCtrl = require('../controllers/reviews');
 var authCtrl = require('../controllers/authentication');
+var orderCtrl = require('../controllers/order');
 
 router.get('/cafe', cafeCtrl.cafesByFilter);
-router.post('/cafe', cafeCtrl.cafesCreate);
+router.post('/cafe', auth, cafeCtrl.cafesCreate);
 router.get('/cafe/:cafeid', cafeCtrl.cafeInfo);
-router.delete('/cafe/:cafeid', cafeCtrl.cafeDelete);
-router.put('/cafe/:cafeid', cafeCtrl.cafeUpdate);
+router.delete('/cafe/:cafeid', auth, cafeCtrl.cafeDelete);
+router.put('/cafe/:cafeid', auth, cafeCtrl.cafeUpdate);
+router.post('/cafe/:cafeid/table', auth, cafeCtrl.updateTable);
 
 router.get('/cafe/:cafeid/reviews/:reviewid', reviewsCtrl.reviewsReadOne);
 router.post('/cafe/:cafeid/reviews', auth, reviewsCtrl.reviewCreate);
@@ -22,8 +24,14 @@ router.delete('/cafe/:cafeid/reviews/:reviewid', auth, reviewsCtrl.reviewDelete)
 
 router.post('/user/register', authCtrl.register);
 router.post('/user/login', authCtrl.login);
-router.get('/user', auth, authCtrl.userInfo);
+router.get('/user/client', auth, authCtrl.clientInfo);
+router.get('/user/admin', auth, authCtrl.adminInfo);
 router.delete('/user', auth, authCtrl.deleteUser);
-router.post('/user/image', auth, authCtrl.updateUser);
+router.post('/user/client/image', auth, authCtrl.updateClient);
+
+router.get('/user/admin/:cafeid', auth, orderCtrl.getOrdersByCafeId);
+router.get('/user/client/:clientid', auth, orderCtrl.getOrdersByClientId);
+router.post('/user/client/order', auth, orderCtrl.addOrder);
+router.delete('/user/client/order/:orderid', auth, orderCtrl.deleteOrder);
 
 module.exports = router;

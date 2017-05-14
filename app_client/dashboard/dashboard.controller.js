@@ -1,9 +1,9 @@
 (function(){
 	var dashboardCtrl = function($location, $uibModal, cafeData, authentication){
 		var vm = this; 
-		vm.isLog = authentication.isLoggedIn();
+		vm.clientLogin = authentication.isLoggedIn('client');
 		
-		if(vm.isLog){
+		if(vm.clientLogin){
 			vm.user = authentication.currentUser();
 			authentication.getUserInfo().then(function(data){
 				vm.user.img = data.data.img;

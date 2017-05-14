@@ -1,7 +1,7 @@
 (function(){
 	var navLoginCtrl = function($location, authentication){
 		var vm = this;
-		vm.isLoggedIn = authentication.isLoggedIn();
+		vm.clientLogin = authentication.isLoggedIn('client');
 		vm.currentUser = authentication.currentUser();
 		vm.currentPath = $location.path();
 		vm.logout = function(){

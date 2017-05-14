@@ -24,12 +24,31 @@
 			});
 		};
 		
-		var updateCafe = function(data){
-			return $http.post('/api/cafe', data,{
-				headers: {
-					Authorization: 'Bearer '+authentication.getToken()
-				}
-			});
+		var addCafe = function(data){
+			if(authentication.isLoggedIn('admin'))
+				return $http.post('/api/cafe', data,{
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				});
+		};
+		
+		var deleteCafe = function(cafeid){
+			if(authentication.isLoggedIn('admin'))
+				return $http.delete('/api/cafe/' + cafeid, {
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				});
+		};
+		
+		var updateCafe = function(cafeid, data){
+			if(authentication.isLoggedIn('admin'))
+				return $http.put('/api/cafe/' + cafeid, data,{
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				});
 		};
 		
 		return{
@@ -37,7 +56,9 @@
 			getCafeById: getCafeById,
 			addReviewById: addReviewById,
 			deleteReviewById: deleteReviewById,
-			updateCafe: updateCafe
+			updateCafe: updateCafe,
+			deleteCafe: deleteCafe,
+			addCafe: addCafe
 		};
 	}
 

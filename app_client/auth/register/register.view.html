@@ -16,6 +16,18 @@
 					<label for="password">Пароль</label>
 					<input type="password" class="form-control" id="password" placeholder="Пароль" ng-model="vm.credentials.password">
 				</div>
+				<div class="radio">
+				    <label>
+						<input type="radio" ng-model="vm.credentials.type" value="client" checked>
+						Клиент
+					</label>
+				</div>
+				<div class="radio">
+				  <label>
+					  <input type="radio" ng-model="vm.credentials.type" value="admin">
+					  Администратор кафе
+					</label>
+				</div>
 				<button type="submit" class="btn btn-default">Зарегистрироваться</button>
 			</form>
 		</div>

@@ -3,7 +3,6 @@ var cafeModel = mongoose.model('Cafe');
 var User = mongoose.model('User');
 
 module.exports.reviewCreate = function(req,res){
-	console.log('enter');
 	getAuthor(req, res, function(req, res, userName){
 		if(req.params.cafeid){
 			cafeModel

@@ -5,7 +5,8 @@
 			name: "",
 			email: "",
 			password: "",
-			img: ""
+			img: "",
+			type: ""
 		};
 		
 		vm.returnPage = $location.search().page || '/';

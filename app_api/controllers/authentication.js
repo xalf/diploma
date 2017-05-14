@@ -1,11 +1,13 @@
 var passport = require("passport");
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Client = mongoose.model('Client');
+var Admin = mongoose.model('Admin');
 var multiparty = require('multiparty');
 var fs = require("fs");
 
 module.exports.register = function(req, res){
-	if(!req.body.name || ! req.body.email || !req.body.password){
+	if(!req.body.name || !req.body.email || !req.body.password || !req.body.type){
 		sendJsonResponse(res, 404, {
 			message: "Все поля обязательны"
 		});
@@ -14,6 +16,7 @@ module.exports.register = function(req, res){
 	var user = new User();
 	user.name = req.body.name;
 	user.email = req.body.email;
+	user.type = req.body.type;
 	user.setPassword(req.body.password);
 	
 	user.save(function(err){
@@ -22,15 +25,31 @@ module.exports.register = function(req, res){
 			sendJsonResponse(res, 404, err);
 		} else {
 			token = user.generateJwt();
-			sendJsonResponse(res, 200, {
-				'token': token
-			});
+			var saveType = function(err){
+				if(err)
+					sendJsonResponse(res, 404, err);
+				else 
+					sendJsonResponse(res, 200, {
+						'token': token
+					});
+			};
+			if(req.body.type === 'client'){
+				var client = new Client();
+				client.userid = user._id;
+				client.save(saveType);
+			}
+			if(req.body.type === 'admin'){
+				var admin = new Admin();
+				admin.userid = user._id;
+				admin.save(saveType);
+			}
+			
 		}
 	});
 };
 
 module.exports.login = function(req, res){
-	if(! req.body.email || !req.body.password){
+	if(!req.body.email || !req.body.password || !req.body.type){
 		sendJsonResponse(res, 404, {
 			message: "Все поля обязательны"
 		});
@@ -53,8 +72,8 @@ module.exports.login = function(req, res){
 	})(req, res);
 };
 
-module.exports.userInfo = function(req, res){
-	if(req.payload && req.payload.email){
+module.exports.clientInfo = function(req, res){
+	if(req.payload && req.payload.email && req.payload.type === 'client'){
 		User
 			.findOne({email:req.payload.email})
 			.exec(function(err, user){
@@ -62,12 +81,22 @@ module.exports.userInfo = function(req, res){
 					sendJsonResponse(res, 404, err);
 					return;
 				} else {
-					sendJsonResponse(res, 200, {
-						img: user.img
+					Client
+						.findOne({userid:user._id})
+						.exec(function(err, client){
+							if(err){
+								sendJsonResponse(res, 404, err);
+								return;
+							} else {
+								sendJsonResponse(res, 200, {
+									img: client.img
+								});
+								return;
+							}
 					});
-					return;
 				}
-		});
+			});
+		
 	} else {
 		sendJsonResponse(res, 404, {
 			"message": "Такого пользователя не найдено"
@@ -76,11 +105,11 @@ module.exports.userInfo = function(req, res){
 	}
 };
 
-module.exports.updateUser = function(req, res){
-	if(req.payload && req.payload.email){
-		User
-			.findOne({email:req.payload.email})
-			.exec(function(err, user){
+module.exports.updateClient = function(req, res){
+	if(req.payload && req.payload.email && req.payload.type === 'client'){
+		Client
+			.findOne({userid: req.payload._id})
+			.exec(function(err, client){
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
@@ -108,9 +137,9 @@ module.exports.updateUser = function(req, res){
 						//если нет ошибок и все хорошо
 						if(errors.length == 0) {
 							var newLink = uploadFile.path.substr(9);
-							user.img = newLink;
+							client.img = newLink;
 							
-							user.save(function(err){
+							client.save(function(err){
 								if(err)
 									sendJsonResponse(res, 404, err);
 								else{
@@ -178,16 +207,31 @@ module.exports.updateUser = function(req, res){
 
 module.exports.deleteUser = function(req, res){
 	if(req.payload && req.payload.email){
+		var typeSchema;
+		if(req.payload.type === 'client')
+			typeSchema = Client;
+		if(req.payload.type === 'admin')
+			typeSchema = Admin;
 		User
-			.findOne({email:req.payload.email})
+			.findOne()
 			.remove(function(err){
 				if(err){
 					sendJsonResponse(res, 404, err);
 					return;
-				} else 
-					sendJsonResponse(res, 200, {
-						message: "Пользователь удалён"
-					});
+				} else {
+					typeSchema
+						.findOne({userid:req.payload._id})
+						.remove(function(err){
+							if(err){
+								sendJsonResponse(res, 404, err);
+								return;
+							} else {
+								sendJsonResponse(res, 200, {
+									message: "Пользователь удалён"
+								});
+							}
+						});
+					}
 		});
 	} else {
 		sendJsonResponse(res, 404, {
@@ -196,6 +240,39 @@ module.exports.deleteUser = function(req, res){
 		return;
 	}
 }
+
+module.exports.adminInfo = function(req, res){
+	if(req.payload && req.payload.email && req.payload.type === 'admin'){
+		User
+			.findOne({email:req.payload.email})
+			.exec(function(err, user){
+				if(err){
+					sendJsonResponse(res, 404, err);
+					return;
+				} else {
+					Admin
+						.findOne({userid:user._id})
+						.exec(function(err, admin){
+							if(err){
+								sendJsonResponse(res, 404, err);
+								return;
+							} else {
+								sendJsonResponse(res, 200, {
+									cafeid: admin.cafeid
+								});
+								return;
+							}
+					});
+				}
+			});
+		
+	} else {
+		sendJsonResponse(res, 404, {
+			"message": "Такого пользователя не найдено"
+		});
+		return;
+	}
+};
 
 var sendJsonResponse = function(res, status, content){
 	res.status(status);

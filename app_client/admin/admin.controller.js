@@ -9,43 +9,53 @@
 		};
 		
 		//начальные значения
-		vm.cafeForm = {};
 		vm.newTimetable = {};
-		vm.cafeForm.contacts = [];
 		vm.newContact = jQuery.extend({},emptyContact);
+		vm.adminLogin = authentication.isLoggedIn('admin');
+		authentication.getAdminInfo().then(function(data){
+			vm.cafeid = data.data.cafeid;
+			cafeData.getCafeById(vm.cafeid).then(function(data){
+				vm.cafeForm = data.data;
+			}, function(e){
+				console.log(e);
+			});
+		}, function(e){
+			vm.cafeForm = {};
+			vm.cafeForm.contacts = [];
+			vm.cafeForm.timetable = [{
+				number: 1,
+				name: 'Пн',
+				isChoice: false
+			},{
+				number: 2,
+				name: 'Вт',
+				isChoice: false
+			},{
+				number: 3,
+				name: 'Ср',
+				isChoice: false
+			},{
+				number: 4,
+				name: 'Чт',
+				isChoice: false
+			},{
+				number: 5,
+				name: 'Пт',
+				isChoice: false
+			},{
+				number: 6,
+				name: 'Сб',
+				isChoice: false
+			},{
+				number: 7,
+				name: 'Вс',
+				isChoice: false
+			}];
+		});
 		
 		//Статичные данные
 		vm.cuisineNames = ["Французская кухня", "Итальянская кухня", "Японская кухня", "Китайская кухня", "Русская кухня", "Грузинская кухня","Вьетнамская кухня"];
 		vm.paymentNames = ["Наличные", "Банковская карта", "Через интернет"];
-		vm.cafeForm.days = [{
-			number: 1,
-			name: 'Пн',
-			isChoice: false
-		},{
-			number: 2,
-			name: 'Вт',
-			isChoice: false
-		},{
-			number: 3,
-			name: 'Ср',
-			isChoice: false
-		},{
-			number: 4,
-			name: 'Чт',
-			isChoice: false
-		},{
-			number: 5,
-			name: 'Пт',
-			isChoice: false
-		},{
-			number: 6,
-			name: 'Сб',
-			isChoice: false
-		},{
-			number: 7,
-			name: 'Вс',
-			isChoice: false
-		}];
 		
 		
 		
@@ -56,7 +66,7 @@
 		};
 		vm.addInTimetable = function(){
 			for(var i = 0; i < vm.newTimetable.day.length; i++)
-				vm.cafeForm.days.forEach(function(item, j, arr){
+				vm.cafeForm.timetable.forEach(function(item, j, arr){
 					if(item.number == vm.newTimetable.day[i]){
 						item.isChoice = true;
 						item.closeTime = vm.newTimetable.closeTime;
@@ -76,8 +86,10 @@
 			day.closeTime = null;
 		};
 		vm.onSubmit = function(){
-			console.log(vm.cafeForm);
-			cafeData.updateCafe(vm.cafeForm);
+			if(vm.cafeid)
+				cafeData.updateCafe(vm.cafeid, vm.cafeForm);
+			else
+				cafeData.addCafe(vm.cafeForm);
 		};
 		
 		

@@ -46,8 +46,8 @@
         <div class="col-xs-12">
           <div class="panel panel-primary review-panel">
             <div class="panel-heading clearfix">
-              <a class="btn btn-default pull-right" ng-click="vm.popupReviewForm()" ng-show="vm.isLoggedIn">Добавить отзыв</a>
-              <a class="btn btn-default pull-right" ng-hide="vm.isLoggedIn" href="/login?page={{vm.currentPath}}">Войти и добавить отзыв</a>
+              <a class="btn btn-default pull-right" ng-click="vm.popupReviewForm()" ng-show="vm.clientLogin">Добавить отзыв</a>
+              <a class="btn btn-default pull-right" ng-hide="vm.clientLogin" href="/login?page={{vm.currentPath}}">Войти и добавить отзыв</a>
               <h2 class="panel-title">Отзывы</h2>
             </div>
             <div class="panel-body review-container">

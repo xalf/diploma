@@ -2,7 +2,7 @@
 	<nav class="navbar navbar-default">
 		<nav-login></nav-login>
 	</nav>
-	<div class="container" ng-show="vm.isLog">	
+	<div class="container" ng-show="vm.clientLogin">	
 		<div class="row">
 			<div class="col-md-3">
 				<img src="{{vm.user.img}}" alt="..." class="img-circle">
@@ -29,5 +29,5 @@
 			</div>
 		</div>
 	</div>
-	<div role="alert" ng-hide="vm.isLog" class="alert alert-danger">Вы не вошли в приложение: <a href="/login?path=/dashboard">Войти</a></div>
+	<div role="alert" ng-hide="vm.clientLogin" class="alert alert-danger">Вы не вошли в приложение: <a href="/login?path=/dashboard">Войти</a></div>
 </div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="constructApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ПИ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <work-table></work-table>
+  <div id="action-menu">
+    <a href="" id="add-rectangle">Добавить прямоугольник</a>
+    <a href="" id="add-triangle">Добавить треугольник</a>
+    <a href="" id="add-circle">Добавить круг</a>
+    <a href="" id="delete">Удалить</a>
+    <a href="" id="clear">Очистить поле</a>
+    <a href="" id="group">Сгруппированить</a>
+    <a href="" id="ungroup">Разгруппировать</a>
+    <a href="" id="up">Вверх</a>
+    <a href="" id="down">Вниз</a>
+    <a href="" id="getImg">Сохранить изображение</a>
+  </div>
+  <div id="objects-area">
+      <div id="select-frame"></div>
+  </div>
+  <script src="js/angular.min.js"></script>
+  <script src="js/construct.module.js"></script>
+  <script src="js/colorService/random.js"></script>
+  <script src="js/workTable/workTable.controller.js"></script>
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/figure.js"></script>
+  <script src="js/client.js"></script>
+</body>
+</html>

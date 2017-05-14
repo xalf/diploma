@@ -3,7 +3,8 @@
 		var vm = this;
 		vm.credentials = {
 			email: "",
-			password: ""
+			password: "",
+			type: ""
 		};
 		
 		vm.returnPage = $location.search().page || '/';

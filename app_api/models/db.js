@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var readline = require('readline');
 require('./locations');
 require('./users');
+require('./orders');
 
 var dbURL = 'mongodb://localhost/diploma';
 mongoose.connect(dbURL);

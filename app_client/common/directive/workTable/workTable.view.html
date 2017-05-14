@@ -1,0 +1,31 @@
+<div id="work-table">
+  <div class="navbar action-menu navbar-inverse">
+	  <ul class="nav navbar-nav">
+		  <li>
+			<a ng-click="wtvm.addRectangle()">Добавить прямоугольник</a>
+		  </li>
+		  <li>
+			<a ng-click="wtvm.addCircle()">Добавить круг</a>
+		  </li>
+		  <li>
+			<a ng-click="wtvm.delete()">Удалить</a>
+		  </li>
+		  <li>
+			<a ng-click="wtvm.clear()">Очистить поле</a>
+		  </li>
+		  <li>
+			<a ng-click="wtvm.group()">Сгруппированить</a>
+		  </li>
+		  <li>
+			<a ng-click="wtvm.ungroup()">Разгруппировать</a>
+		  </li>
+		  <li>
+			<a ng-click="wtvm.save()">Сохранить изображение</a>
+		  </li>
+	  </ul>
+  </div>
+  <div id="objects-area" class="container" ng-mousedown="wtvm.workTableMousedown($event)">
+      <div id="select-frame" ng-style="wtvm.sFrameStyle"></div>
+      <figure ng-repeat="figure in wtvm.figures track by $index" class="{{figure.type}}" figure-id="{{figure.id}}"></figure>
+  </div>
+</div>

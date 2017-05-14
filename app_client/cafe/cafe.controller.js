@@ -3,7 +3,7 @@
 		var vm = this;
 		vm.message = "Загружаем информацию";
 		vm.currentPath = $location.path();
-		vm.isLoggedIn = authentication.isLoggedIn();
+		vm.clientLogin = authentication.isLoggedIn('client');
 		vm.userName = authentication.currentUser().name;
 		
 		cafeData.getCafeById($routeParams.cafeid).then(function(data){
