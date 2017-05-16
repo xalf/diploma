@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var cafeModel = mongoose.model('Cafe');
 var adminModel = mongoose.model('Admin');
+var saveImg = require('../saveImg');
 
 module.exports.cafesByFilter = function(req,res){
 	cafeModel.find().exec(function(err, cafes){
@@ -132,6 +133,7 @@ module.exports.cafeUpdate = function(req,res){
 					sendJsonResponse(res,404,err);
 					return;
 				}
+				
 				cafe.name = req.body.name;
 				cafe.address= req.body.address;
 				cafe.cuisine= req.body.cuisine;
@@ -156,6 +158,96 @@ module.exports.cafeUpdate = function(req,res){
 						sendJsonResponse(res, 200, cafe);
 				});
 
+			});
+		} else {
+			sendJsonResponse(res,404,{
+				message: "not cafeid in request"
+			});
+		}
+	} else {
+		sendJsonResponse(res, 404, {
+			"message": "Такого пользователя не найдено"
+		});
+		return;
+	}	
+};
+
+module.exports.cafeUpdateImg = function(req,res){
+	if(req.payload && req.payload.email && req.payload.type === 'admin'){
+		if(req.params.cafeid){
+			cafeModel.findById(req.params.cafeid).select('img').exec(function(err, cafe){
+				if(!cafe){
+					sendJsonResponse(res,404,{
+						message: "cafeid not found"
+					});
+					return;
+				} else if(err){
+					sendJsonResponse(res,404,err);
+					return;
+				}
+				
+				cafe.name = req.body.name;
+				cafe.address= req.body.address;
+				cafe.cuisine= req.body.cuisine;
+				cafe.payments= req.body.payments;
+				cafe.timetable= {
+					days: req.body.timetableDay,
+					close_hour: req.body.timetableCloseHour,
+					close_minuts: req.body.timetableCloseMinuts,
+					open_hour: req.body.timetableOpenHour,
+					open_minuts: req.body.timetableOpenMinuts
+				};
+				cafe.contacts= {
+					name: req.body.contacts.name,
+					value: req.body.contacts.value,
+					type: req.body.contacts.type
+				};
+
+				cafe.save(function(err, cafe){
+					if(err)
+						sendJsonResponse(res, 404, err);
+					else
+						sendJsonResponse(res, 200, cafe);
+				});
+
+			});
+		} else {
+			sendJsonResponse(res,404,{
+				message: "not cafeid in request"
+			});
+		}
+	} else {
+		sendJsonResponse(res, 404, {
+			"message": "Такого пользователя не найдено"
+		});
+		return;
+	}	
+};
+
+module.exports.cafeUpdateWorkTableImg = function(req,res){
+	if(req.payload && req.payload.email && req.payload.type === 'admin'){
+		if(req.params.cafeid){
+			cafeModel.findById(req.params.cafeid).select('workTableImg').exec(function(err, cafe){
+				if(!cafe){
+					sendJsonResponse(res,404,{
+						message: "cafeid not found"
+					});
+					return;
+				} else if(err){
+					sendJsonResponse(res,404,err);
+					return;
+				}
+				saveImg(req, function(uploadFile){
+					var newLink = uploadFile.path.substr(9);
+					cafe.workTableImg = newLink;
+					
+					cafe.save(function(err, cafe){
+						if(err)
+							sendJsonResponse(res, 404, err);
+						else
+							sendJsonResponse(res, 200, cafe);
+					});
+				});
 			});
 		} else {
 			sendJsonResponse(res,404,{

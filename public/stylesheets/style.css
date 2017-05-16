@@ -17,16 +17,17 @@ a {
     border: 1px dotted #5c6a8e;
     background-color: #6582c9;
     position: absolute;
-    z-index: -1;
     visibility: hidden;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; 
     filter: alpha(opacity=40);
     opacity: .4;
 }
-.rectangle>div, .composite, .circle>div{
+#select-frame.show {
+	visibility: visible;
+}
+.rectangle, .composite, .circle{
     cursor: pointer;
     position: absolute;
-    z-index: 0;
 }
 .rectangle .fig {
     height: 100%;

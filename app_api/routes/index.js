@@ -16,6 +16,8 @@ router.get('/cafe/:cafeid', cafeCtrl.cafeInfo);
 router.delete('/cafe/:cafeid', auth, cafeCtrl.cafeDelete);
 router.put('/cafe/:cafeid', auth, cafeCtrl.cafeUpdate);
 router.post('/cafe/:cafeid/table', auth, cafeCtrl.updateTable);
+router.post('/cafe/:cafeid/worktableimg', auth, cafeCtrl.cafeUpdateWorkTableImg);
+router.post('/cafe/:cafeid/image', auth, cafeCtrl.cafeUpdateImg);
 
 router.get('/cafe/:cafeid/reviews/:reviewid', reviewsCtrl.reviewsReadOne);
 router.post('/cafe/:cafeid/reviews', auth, reviewsCtrl.reviewCreate);

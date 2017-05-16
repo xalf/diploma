@@ -14,18 +14,37 @@
 			<a ng-click="wtvm.clear()">Очистить поле</a>
 		  </li>
 		  <li>
-			<a ng-click="wtvm.group()">Сгруппированить</a>
-		  </li>
-		  <li>
-			<a ng-click="wtvm.ungroup()">Разгруппировать</a>
+			<a ng-click="wtvm.setImage()">Установить изображение</a>
 		  </li>
 		  <li>
 			<a ng-click="wtvm.save()">Сохранить изображение</a>
 		  </li>
 	  </ul>
   </div>
-  <div id="objects-area" class="container" ng-mousedown="wtvm.workTableMousedown($event)">
-      <div id="select-frame" ng-style="wtvm.sFrameStyle"></div>
-      <figure ng-repeat="figure in wtvm.figures track by $index" class="{{figure.type}}" figure-id="{{figure.id}}"></figure>
+  <div id="objects-area" class="container" ng-mousedown="wtvm.workTableMousedown($event)" ng-style="wtvm.workTableImg">
+      <div id="select-frame" ng-style="wtvm.sFrame.sFrameStyle | formatStyle" ng-class="wtvm.sFrame.classes" ng-mousedown="wtvm.sFrame.mousedown($event)">
+      	<div ng-repeat="figure in wtvm.sFrame.children track by $index" ng-class="figure.classes" figure-id="{{figure.id}}" ng-style="figure.style | formatStyle" ng-mousedown="wtvm.sFrame.mousedown($event)">
+			<div class="fig"></div>
+			<div class="l"></div>
+			<div class="r"></div>
+			<div class="t"></div>
+			<div class="d"></div>
+			<div class="tl"></div>
+			<div class="tr"></div>
+			<div class="dl"></div>
+			<div class="dr"></div>
+		</div>
+      </div>
+      <div ng-repeat="figure in wtvm.figures track by $index" ng-class="figure.classes" figure-id="{{figure.id}}" ng-style="figure.style | formatStyle" ng-mousedown="figure.mousedown($event)">
+		<div class="fig"></div>
+		<div class="l"></div>
+		<div class="r"></div>
+		<div class="t"></div>
+		<div class="d"></div>
+		<div class="tl"></div>
+		<div class="tr"></div>
+		<div class="dl"></div>
+		<div class="dr"></div>
+	</div>
   </div>
 </div>

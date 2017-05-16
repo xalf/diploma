@@ -32,7 +32,9 @@ var cafeSchema = new mongoose.Schema({
 	rating: {type: Number, "default": 0, min: 0, max: 5},
 	create: {type: Date, "default": Date.now()},
 	order: {type: Number, "default": 0, min: 0},
-	check: {type: Number, required: true}
+	check: {type: Number, required: true},
+	img: String,
+	workTableImg: String
 });
 
 mongoose.model('Cafe', cafeSchema, 'cafes');
