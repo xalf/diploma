@@ -1,6 +1,7 @@
 (function(){
 	var registerCtrl = function($location, authentication){
 		var vm = this;
+		vm.islogin = authentication.isLoggedIn('client') || authentication.isLoggedIn('admin');
 		vm.credentials = {
 			name: "",
 			email: "",

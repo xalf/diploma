@@ -1,8 +1,12 @@
 body {
   padding: 50px;
+	padding-top: 100px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+.er404{
+	font-size: 100px;
+	
+}
 a {
   color: #00B7FF;
 }

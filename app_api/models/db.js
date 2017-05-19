@@ -4,7 +4,7 @@ require('./locations');
 require('./users');
 require('./orders');
 
-var dbURL = 'mongodb://localhost/diploma';
+var dbURL = 'mongodb://127.0.0.1/diploma';
 mongoose.connect(dbURL);
 
 if(process.platform === "win32"){

@@ -4,7 +4,8 @@
 		vm.message = "Загружаем информацию";
 		vm.currentPath = $location.path();
 		vm.clientLogin = authentication.isLoggedIn('client');
-		vm.userName = authentication.currentUser().name;
+		if(vm.clientLogin)
+			vm.userName = authentication.currentUser().name;
 		
 		cafeData.getCafeById($routeParams.cafeid).then(function(data){
 			vm.cafe = data.data;

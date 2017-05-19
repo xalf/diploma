@@ -15,7 +15,7 @@
     				</tr>
     				<tr ng-repeat="order in vm.orders">
     					<td>{{order.date | date: 'MM.dd' }}</td>
-    					<td>{{order.date | date: 'H:m'}} - {{order.dateEnd | date:'H:m'}}</td>
+    					<td>{{order.date | date: 'H:mm'}} - {{order.dateEnd | date:'H:mm'}}</td>
     					<td>{{order.table.number}}</td>
     					<td>{{order.customer}}</td>
     				</tr>
@@ -63,7 +63,7 @@
 				<div class="col-md-4 col-sm-4">
 					<div class="form-group">
 						<input type="checkbox" ng-model="vm.newContact.isLink">
-						<label>Тип контакта</label>
+						<label>Ссылка</label>
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-4">

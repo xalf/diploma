@@ -1,7 +1,4 @@
 <div class="container" ng-controller="homeCtrl">
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<nav-login></nav-login>
-	</nav>
 	<div class="container">	
 		<div class="row">
 			<div class="col-md-3">
@@ -12,7 +9,7 @@
 					<div class="panel-body">
 						<div class="form-group">
 							<label for="filter">Найти кафе</label>
-							<input type="text" id="filter" name="filter" ng-model="vm.textFilter" class="form-controll">
+							<input type="text" id="filter" name="filter" ng-model="vm.textFilter" class="form-control">
 						</div>
 						<div class="form-group">
 							<label for="filter">Выберите фильтр</label>
@@ -25,14 +22,14 @@
 						</div>
 						<div class="form-group">
 							<label for="filter">Выберите кухню</label>
-							<select id="rating" name="rating" ng-model="vm.textFilter" class="form-control input-sm">
+							<select id="rating" name="rating" ng-model="vm.cuisineFilter" class="form-control input-sm">
 								<option ng-repeat="cuisineName in vm.cuisineNames" value="{{cuisineName}}">{{cuisineName}}</option>
 								<option value="">Любая</option>
 							  </select>
 						</div>
 						<div class="form-group">
 							<label for="filter">Выберите способ оплаты</label>
-							<select id="rating" name="rating" ng-model="vm.textFilter" class="form-control input-sm">
+							<select id="rating" name="rating" ng-model="vm.paymentFilter" class="form-control input-sm">
 								<option ng-repeat="paymentName in vm.paymentNames" value="{{paymentName}}">{{paymentName}}</option>
 								<option value="">Любой</option>
 							  </select>
@@ -46,7 +43,7 @@
 				</h1>
 				<div class="error">{{vm.message}}</div>
 				<div class="row list-group">
-					<div class="list-group-item" ng-repeat="cafe in vm.data.cafes | filter:vm.textFilter | orderBy: vm.selectFilter">
+					<div class="list-group-item" ng-repeat="cafe in vm.data.cafes | filter:vm.paymentFilter | filter:vm.textFilter | filter:vm.cuisineFilter | orderBy: vm.selectFilter :true">
 						<h4>
 							<a href="/cafe/{{cafe._id}}">{{cafe.name}}</a>
 							<small rating-stars rating="cafe.rating"></small>

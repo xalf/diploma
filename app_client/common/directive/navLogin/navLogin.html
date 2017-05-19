@@ -1,14 +1,17 @@
 <ul class="nav navbar-nav">
-	<li ng-hide="navvm.clientLogin">
+	<li ng-hide="navvm.clientLogin || navvm.adminLogin">
 		<a href="/login?page={{navvm.currentPage}}">Войти</a>
 	</li>
-	<li ng-hide="navvm.clientLogin">
+	<li ng-hide="navvm.clientLogin || navvm.adminLogin">
 		<a href="/register?page={{navvm.currentPage}}">Зарегистрироваться</a>
 	</li>
 	<li ng-show="navvm.clientLogin">
 		<a href="/dashboard">{{navvm.currentUser.name}}</a>
 	</li>
-	<li ng-show="navvm.clientLogin">
+	<li ng-show="navvm.adminLogin">
+		<a href="/admin">{{navvm.currentUser.name}}</a>
+	</li>
+	<li ng-show="navvm.clientLogin || navvm.adminLogin">
 		<a href="" ng-click="navvm.logout()">Выйти</a>
 	</li>
 </ul>

@@ -1,16 +1,13 @@
 <div ng-controller="dashboardCtrl">
-	<nav class="navbar navbar-default">
-		<nav-login></nav-login>
-	</nav>
 	<div class="container" ng-show="vm.clientLogin">	
 		<div class="row">
 			<div class="col-md-3">
-				<img src="{{vm.user.img}}" alt="..." class="img-circle">
+				<img ng-show="vm.user.img" src="{{vm.user.img}}" alt="..." class="img-circle img-responsive">
 				<h2 class="center-block">
 					{{vm.user.name}}
 					<smal>{{vm.user.email}}</smal>
 				</h2>
-				<p><a href="" ng-click="vm.updateProfile()">Изменить профиль</a> / <a ng-click="vm.deleteProfile()" href="">Удалить профиль</a></p>
+				<p><a href="" ng-click="vm.updateProfile()">Изменить фотографию</a> / <a ng-click="vm.deleteProfile()" href="">Удалить профиль</a></p>
 			</div>
 			<div class="col-md-9">
 				<h2>Заказанные столики</h2>

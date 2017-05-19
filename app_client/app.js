@@ -38,7 +38,10 @@
 					controller: "adminCtrl",
 					controllerAs: 'vm'
 				})
-				.otherwise({redirectTo: '/'});
+				.when('/404',{
+					templateUrl: '/404.html'
+				})
+				.otherwise({redirectTo: '/404'});
 		}
 	]);
 })();

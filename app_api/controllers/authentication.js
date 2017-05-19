@@ -24,6 +24,7 @@ module.exports.register = function(req, res){
 			sendJsonResponse(res, 404, err);
 		} else {
 			token = user.generateJwt();
+			var id = user._id.toString();
 			var saveType = function(err){
 				if(err)
 					sendJsonResponse(res, 404, err);
@@ -33,14 +34,33 @@ module.exports.register = function(req, res){
 					});
 			};
 			if(req.body.type === 'client'){
+				console.log("client");
+				console.log(typeof user._id);
 				var client = new Client();
 				client.userid = user._id;
+				console.log(typeof client.userid);
 				client.save(saveType);
 			}
 			if(req.body.type === 'admin'){
+				/*console.log("admin");
+				console.log(user._id);
 				var admin = new Admin();
 				admin.userid = user._id;
-				admin.save(saveType);
+				console.log(admin.userid);
+				console.log(admin);
+				admin.save(saveType);*/
+				var obj = {
+					userid: id,
+					cafeid: ""
+				};
+				Admin.create(obj,function(err, admin){
+					if(err)
+					sendJsonResponse(res, 404, err);
+				else 
+					sendJsonResponse(res, 200, {
+						'token': token
+					});
+				});	
 			}
 			
 		}
@@ -188,7 +208,9 @@ module.exports.adminInfo = function(req, res){
 					Admin
 						.findOne({userid:user._id})
 						.exec(function(err, admin){
-							if(err || admin.cafeid === ''){
+					console.log('admin'); 
+						console.log(admin);
+							if(err || !admin.cafeid){
 								sendJsonResponse(res, 404, err);
 								return;
 							} else {

@@ -100,7 +100,7 @@
 				table: {
 					number: 4
 				},
-				customer: "Колян",
+				customer: "Коля",
 				date: test.setDate(test.getDate()+7),
 				dateEnd: test.setHours(test.getHours()+2)
 			},
@@ -108,7 +108,7 @@
 				table: {
 					number: 2
 				},
-				customer: "Вован",
+				customer: "Вова",
 				date: test.setDate(test.getDate()-2),
 				dateEnd: test.setHours(test.getHours()+1)
 			}
