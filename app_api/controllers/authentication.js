@@ -214,7 +214,6 @@ module.exports.adminInfo = function(req, res){
 								sendJsonResponse(res, 404, err);
 								return;
 							} else {
-								console.log('почему ты здесь?!'); 
 								sendJsonResponse(res, 200, {
 									cafeid: admin.cafeid
 								});

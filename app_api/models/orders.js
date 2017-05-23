@@ -4,10 +4,11 @@ var tableSchema = new mongoose.Schema({
 	number: {type: Number, require: true},
 	numberOfSeats: {},
 	cafeid: {type: String, require: true},
-	size: Number,
-	color: String,
+	width: Number,
+	height: Number,
 	x: Number,
-	y: Number
+	y: Number,
+	type: {type: String, require: true}
 });
 
 var orderSchema = new mongoose.Schema({

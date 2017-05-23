@@ -37,6 +37,8 @@ module.exports = function(req, callback){
 
 	// при поступление файла
 	form.on('part', function(part) {
+		console.log('about img');
+		console.log(req);
 		//читаем его размер в байтах
 		uploadFile.size = part.byteCount;
 		//читаем его тип

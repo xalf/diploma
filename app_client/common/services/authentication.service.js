@@ -89,7 +89,6 @@
 				});
 		};
 		
-		console.log(this);
 		return {
 			saveToken: saveToken,
 			getToken: getToken,

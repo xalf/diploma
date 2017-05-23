@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var cafeModel = mongoose.model('Cafe');
+var tableModel = mongoose.model('Table');
 var adminModel = mongoose.model('Admin');
 var saveImg = require('../saveImg');
 
@@ -72,6 +73,39 @@ module.exports.cafesCreate = function(req,res){
 		return;
 	}
 };
+
+module.exports.workTableInfo = function(req, res){
+	if(req.params && req.params.cafeid){
+		cafeModel.findById(req.params.cafeid).exec(function(err, cafe){
+			if(!cafe){
+				sendJsonResponse(res,404,{
+					message: "cafeid not found"
+				});
+				return;
+			} else if (err) {
+				sendJsonResponse(res,404,err);
+				return;
+			}
+			var respoceObj = {
+				workTableImg: cafe.workTableImg
+			};
+			tableModel.find({cafeid: cafe._id}).exec(function(err, tables){
+				if(!tables || err){
+					sendJsonResponse(res, 404, respoceObj);
+					return;
+				} 
+				respoceObj.tables = tables;
+				sendJsonResponse(res, 200, respoceObj);
+			});
+		});
+	} else {
+		sendJsonResponse(res,404, {
+			message: "not cafeid in request"
+		});	
+	}
+};
+
+module.exports.getOrders = function(req, res){};
 
 module.exports.cafeInfo = function(req,res){
 	if(req.params && req.params.cafeid){
@@ -265,7 +299,23 @@ module.exports.cafeUpdateWorkTableImg = function(req,res){
 module.exports.updateTable = function(req, res){
 	if(req.payload && req.payload.email && req.payload.type === 'admin'){
 		if(req.params.cafeid){
-			
+			tableModel
+				.find({cafeid: req.params.cafeid})
+				.remove(function(err){
+					if(err){
+						sendJsonResponse(res, 404, err);
+						return;
+					} 
+					tableModel.create(req.body, function(err, tables){
+						if(err){
+							sendJsonResponse(res, 404, err);
+							return;
+						}
+						sendJsonResponse(res, 404, {
+							message: "success"
+						});
+					});
+				});
 		} else{
 			sendJsonResponse(res,404,{
 				message: "not cafeid in params"

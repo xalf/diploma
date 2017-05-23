@@ -2,10 +2,10 @@
   <div class="navbar action-menu navbar-inverse">
 	  <ul class="nav navbar-nav">
 		  <li>
-			<a ng-click="wtvm.addRectangle()">Добавить прямоугольник</a>
+			<a ng-click="wtvm.addRectangle()">Прямоугольный столик</a>
 		  </li>
 		  <li>
-			<a ng-click="wtvm.addCircle()">Добавить круг</a>
+			<a ng-click="wtvm.addCircle()">Круглый столик</a>
 		  </li>
 		  <li>
 			<a ng-click="wtvm.delete()">Удалить</a>
@@ -14,37 +14,46 @@
 			<a ng-click="wtvm.clear()">Очистить поле</a>
 		  </li>
 		  <li>
-			<a ng-click="wtvm.setImage()">Установить изображение</a>
+			<a ng-click="wtvm.setImage()">Изображение</a>
 		  </li>
 		  <li>
 			<a ng-click="wtvm.save()">Сохранить</a>
 		  </li>
 	  </ul>
+	  <div class="well pull-right">
+	  	<h6>Информация о столике {{wtvm.focusObj.index}}</h6>
+	  	<div>
+			<label for="">Количество мест:</label>
+			<input type="text" ng-model="wtvm.focusObj.numberOfSeats" class="form-control">
+	  	</div>
+	  	<div>
+			<label for="">Номер столика:</label>
+			<input type="text" ng-model="wtvm.focusObj.index" class="form-control" tooltip-placement="bottom" uib-tooltip="Не уникальный номер столика" tooltip-is-open="!wtvm.isUnique(wtvm.focusObj)">
+	  	</div>
+	  </div>
   </div>
-  <div id="objects-area" class="container" ng-mousedown="wtvm.workTableMousedown($event)" ng-style="wtvm.workTableImg">
+  <div id="objects-area" class="container" ng-mousedown="wtvm.workTableMousedown($event)" ng-style="wtvm.workTableImg" ng-mouseup="wtvm.del()">
       <div id="select-frame" ng-style="wtvm.sFrame.sFrameStyle | formatStyle" ng-class="wtvm.sFrame.classes" ng-mousedown="wtvm.sFrame.mousedown($event)">
       	<div ng-repeat="figure in wtvm.sFrame.children track by $index" ng-class="figure.classes" figure-id="{{figure.id}}" ng-style="figure.style | formatStyle" ng-mousedown="wtvm.sFrame.mousedown($event)">
-			<div class="fig"></div>
-			<div class="l"></div>
-			<div class="r"></div>
-			<div class="t"></div>
-			<div class="d"></div>
-			<div class="tl"></div>
-			<div class="tr"></div>
-			<div class="dl"></div>
-			<div class="dr"></div>
+			<div class="l" ng-mousedown="wtvm.resize(figure, $event, 'x1')"></div>
+			<div class="r" ng-mousedown="wtvm.resize(figure, $event, 'x2')"></div>
+			<div class="t" ng-mousedown="wtvm.resize(figure, $event, 'y1')"></div>
+			<div class="d" ng-mousedown="wtvm.resize(figure, $event, 'y2')"></div>
+			<div class="tl" ng-mousedown="wtvm.resize(figure, $event, 'x1', 'y1')"></div>
+			<div class="tr" ng-mousedown="wtvm.resize(figure, $event, 'x2', 'y1')"></div>
+			<div class="dl" ng-mousedown="wtvm.resize(figure, $event, 'x2', 'y2')"></div>
+			<div class="dr" ng-mousedown="wtvm.resize(figure, $event, 'x2', 'y2')"></div>
 		</div>
       </div>
       <div ng-repeat="figure in wtvm.figures track by $index" ng-class="figure.classes" figure-id="{{figure.id}}" ng-style="figure.style | formatStyle" ng-mousedown="figure.mousedown($event)">
-		<div class="fig"></div>
-		<div class="l"></div>
-		<div class="r"></div>
-		<div class="t"></div>
-		<div class="d"></div>
-		<div class="tl"></div>
-		<div class="tr"></div>
-		<div class="dl"></div>
-		<div class="dr"></div>
+		<div class="l" ng-mousedown="wtvm.resize(figure, $event, 'x1')"></div>
+		<div class="r" ng-mousedown="wtvm.resize(figure, $event, 'x2')"></div>
+		<div class="t" ng-mousedown="wtvm.resize(figure, $event, 'y1')"></div>
+		<div class="d" ng-mousedown="wtvm.resize(figure, $event, 'y2')"></div>
+		<div class="tl" ng-mousedown="wtvm.resize(figure, $event, 'x1', 'y1')"></div>
+		<div class="tr" ng-mousedown="wtvm.resize(figure, $event, 'x2', 'y1')"></div>
+		<div class="dl" ng-mousedown="wtvm.resize(figure, $event, 'x2', 'y2')"></div>
+		<div class="dr" ng-mousedown="wtvm.resize(figure, $event, 'x2', 'y2')"></div>
 	</div>
   </div>
 </div>

@@ -11,13 +11,15 @@ var authCtrl = require('../controllers/authentication');
 var orderCtrl = require('../controllers/order');
 
 router.get('/cafe', cafeCtrl.cafesByFilter);
-router.post('/cafe', auth, cafeCtrl.cafesCreate);
 router.get('/cafe/:cafeid', cafeCtrl.cafeInfo);
-router.delete('/cafe/:cafeid', auth, cafeCtrl.cafeDelete);
-router.put('/cafe/:cafeid', auth, cafeCtrl.cafeUpdate);
+router.get('/cafe/:cafeid/workTable', cafeCtrl.workTableInfo);
+router.get('/cafe/:cafeid/orders', cafeCtrl.getOrders);
 router.post('/cafe/:cafeid/table', auth, cafeCtrl.updateTable);
 router.post('/cafe/:cafeid/worktableimg', auth, cafeCtrl.cafeUpdateWorkTableImg);
+router.post('/cafe', auth, cafeCtrl.cafesCreate);
 router.post('/cafe/:cafeid/image', auth, cafeCtrl.cafeUpdateImg);
+router.delete('/cafe/:cafeid', auth, cafeCtrl.cafeDelete);
+router.put('/cafe/:cafeid', auth, cafeCtrl.cafeUpdate);
 
 router.get('/cafe/:cafeid/reviews/:reviewid', reviewsCtrl.reviewsReadOne);
 router.post('/cafe/:cafeid/reviews', auth, reviewsCtrl.reviewCreate);
