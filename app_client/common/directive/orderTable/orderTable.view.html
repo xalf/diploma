@@ -1,7 +1,7 @@
 <div id="objects-area" ng-style="otvm.workTableImg">
-  <div ng-repeat="figure in otvm.figures track by $index" ng-class="figure.classes" ng-style="figure.style | formatStyle">
-	  <div class="popover fade right in" role="tooltip" id="popover881446">
-		  <div class="arrow" style="top: 50%;"></div>
+  <div ng-repeat="figure in otvm.figures track by $index" ng-class="{circle: figure.type=='circle', rectangle: figure.type == 'rectangle', active: figure.active}" ng-style="figure.style | formatStyle" ng-click="otvm.selectionTable(figure)" class="fig">
+	  <div class="popover fade right in" role="tooltip">
+		  <div class="arrow"></div>
 		  <div class="popover-content">
 		  	<p>Номер столика №{{figure.index}}</p>
   			<p>Количество мест: {{figure.numberOfSeats}}</p>
@@ -9,3 +9,12 @@
 	  </div>
   </div>
 </div>
+<div class="input-group">
+  <input type="text" class="form-control" uib-datepicker-popup ng-model="otvm.order.date" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+  <span class="input-group-btn">
+	<button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+  </span>
+</div>
+<p>{{otvm.order.start | date: 'H:mm'}}:{{otvm.order.end | date: 'H:mm'}}</p>
+<div id="slider-range"></div>
+<button ng-click="otvm.onSubmit()">Отправить</button>

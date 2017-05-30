@@ -1,5 +1,7 @@
 <div class="container" ng-controller="cafeCtrl">
 <div class="row page-header col-lg-12">
+     <a class="btn btn-default pull-right" ng-show="vm.clientLogin" ng-click="vm.popupOrder()">Заказать столик</a>
+     <a class="btn btn-default pull-right" href="/login?page={{vm.currentPath}}" ng-hide="vm.clientLogin">Войти и заказать столик</a>
       <h1>{{vm.cafe.name}}</h1>
       <small rating-stars rating="vm.cafe.rating"></small>
   </div>
@@ -64,6 +66,5 @@
 		  	</div>
          	</div>
          </div>
-		<order-table></order-table>
 	</div>
 </div>

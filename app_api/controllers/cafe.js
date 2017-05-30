@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var cafeModel = mongoose.model('Cafe');
+var orderModel = mongoose.model('Order');
 var tableModel = mongoose.model('Table');
 var adminModel = mongoose.model('Admin');
 var saveImg = require('../saveImg');
@@ -21,50 +22,56 @@ module.exports.cafesByFilter = function(req,res){
 
 module.exports.cafesCreate = function(req,res){
 	if(req.payload && req.payload.email && req.payload.type === 'admin'){
-		var cafeObj = {
-			name: req.body.name,
-			address: req.body.address,
-			cuisine: req.body.cuisine,
-			check: req.body.check,
-			payments: [],
-			timetable: [],
-			contacts: []
-		};
-		req.body.contacts.forEach(function(item, i, arr){
-			cafeObj.contacts.push(item);
-			console.log(item);
-		});
-		req.body.payments.forEach(function(item, i, arr){
-			cafeObj.payments.push(item);
-		});
-		req.body.timetable.forEach(function(item, i, arr){
-			cafeObj.timetable.push(item);
-		});
-		cafeModel.create(cafeObj,function(err, cafe){
-			if(err)
-				sendJsonResponse(res,404,err);
-			else{
-				adminModel
-					.findOne({userid:req.payload._id})
-					.exec(function(err, admin){
-						if(err){
-							sendJsonResponse(res, 404, err);
-							return;
-						} else {
+		adminModel
+			.findOne({userid:req.payload._id})
+			.exec(function(err, admin){
+				if(err){
+					sendJsonResponse(res, 404, err);
+					return;
+				} else {
+					if(admin.cafeid != ""){
+						sendJsonResponse(res, 404, {
+							message: "Этот пользователь уже создал кафе"
+						});
+						return;
+					}
+					
+					var cafeObj = {
+						name: req.body.name,
+						address: req.body.address,
+						cuisine: req.body.cuisine,
+						check: req.body.check,
+						payments: [],
+						timetable: [],
+						contacts: []
+					};
+					req.body.contacts.forEach(function(item, i, arr){
+						cafeObj.contacts.push(item);
+						console.log(item);
+					});
+					req.body.payments.forEach(function(item, i, arr){
+						cafeObj.payments.push(item);
+					});
+					req.body.timetable.forEach(function(item, i, arr){
+						cafeObj.timetable.push(item);
+					});
+					cafeModel.create(cafeObj,function(err, cafe){
+						if(err)
+							sendJsonResponse(res,404,err);
+						else{
 							admin.cafeid = cafe._id;
 							admin.save(function(err, admin){
 								if(err)
 									sendJsonResponse(res,404,err);
 								else{
-									console.log(admin);
 									sendJsonResponse(res,200,cafe);
 								}
-									
 							});
 						}
-				});
-			}
-				
+					});
+					
+					
+				}
 		});
 	} else {
 		sendJsonResponse(res, 404, {
@@ -105,7 +112,33 @@ module.exports.workTableInfo = function(req, res){
 	}
 };
 
-module.exports.getOrders = function(req, res){};
+module.exports.getOrders = function(req, res){
+	if(req.params && req.params.cafeid){
+		orderModel
+			.find({cafeid: req.params.cafeid})
+			.exec(function(err, orders){
+				if(err){
+					sendJsonResponse(res, 404, err);
+					return;
+				}
+				var resObj = [];
+				orders.forEach(function(item, i, arr){
+					resObj.push({
+						dateEnd: item.dateEnd,
+						date: item.date,
+						tableNumber: item.tableNumber
+					});
+				});
+				
+				sendJsonResponse(res, 200, resObj);
+					
+			});
+	} else {
+		sendJsonResponse(res,404, {
+			message: "not cafeid in request"
+		});	
+	}
+};
 
 module.exports.cafeInfo = function(req,res){
 	if(req.params && req.params.cafeid){
@@ -172,18 +205,20 @@ module.exports.cafeUpdate = function(req,res){
 				cafe.address= req.body.address;
 				cafe.cuisine= req.body.cuisine;
 				cafe.payments= req.body.payments;
-				cafe.timetable= {
-					days: req.body.timetableDay,
-					close_hour: req.body.timetableCloseHour,
-					close_minuts: req.body.timetableCloseMinuts,
-					open_hour: req.body.timetableOpenHour,
-					open_minuts: req.body.timetableOpenMinuts
-				};
-				cafe.contacts= {
-					name: req.body.contacts.name,
-					value: req.body.contacts.value,
-					type: req.body.contacts.type
-				};
+				cafe.check = req.body.check;
+				cafe.payments = [];
+				cafe.timetable = [];
+				cafe.contacts = [];
+				
+				req.body.contacts.forEach(function(item, i, arr){
+					cafe.contacts.push(item);
+				});
+				req.body.payments.forEach(function(item, i, arr){
+					cafe.payments.push(item);
+				});
+				req.body.timetable.forEach(function(item, i, arr){
+					cafe.timetable.push(item);
+				});
 
 				cafe.save(function(err, cafe){
 					if(err)
@@ -311,7 +346,7 @@ module.exports.updateTable = function(req, res){
 							sendJsonResponse(res, 404, err);
 							return;
 						}
-						sendJsonResponse(res, 404, {
+						sendJsonResponse(res, 200, {
 							message: "success"
 						});
 					});

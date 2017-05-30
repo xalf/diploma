@@ -1,7 +1,18 @@
 (function(){
-var orderTableCtrl = function($scope, $routeParams, coordsService, authentication, workTableService, cafeData){
+var orderModalCtrl = function($uibModalInstance, $scope, $routeParams, coordsService, authentication, workTableService, cafeData){
 	var vm = this;
-	
+
+	vm.modal = {
+		cancel: function(){
+			$uibModalInstance.dismiss('cancel');
+		},
+		close: function(data){
+			$uibModalInstance.close(data);
+		} 
+	};
+	vm.onSubmit = function(){
+		uploader.uploadAll();
+	}
 	var minutesToDate = function(minutes, date){
 		var hour = Math.floor(minutes / 60);
 		var minute = minutes - (hour * 60);
@@ -200,11 +211,11 @@ var orderTableCtrl = function($scope, $routeParams, coordsService, authenticatio
 		}, function(e){
 			console.log(e);
 		});
-	
-	
 };
-	
-angular
-	.module("cafeClientApp")
-	.controller("orderTableCtrl", ['$scope', '$routeParams', 'coordsService', 'authentication', 'workTableService', 'cafeData', orderTableCtrl]);
+
+
+
+angular.module('cafeClientApp')
+	.controller("orderModalCtrl", ['$uibModalInstance', '$scope', '$routeParams', 'coordsService', 'authentication', 'workTableService', 'cafeData', orderModalCtrl]);
 })();
+

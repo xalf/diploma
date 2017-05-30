@@ -55,7 +55,7 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 			vm.focusObj = this;
 
 			areaPosition.update();
-			var figurePosition = new coordsService($event.srcElement, areaPosition);
+			var figurePosition = new coordsService($event.target, areaPosition);
 
 			var downCoords = coords($event);
 			this.shiftY = downCoords.y - figurePosition.y;
@@ -321,9 +321,18 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 			}
 		});
 		modalUpdate.result.then(function(data){
-			vm.workTableImg = {
-				'background-image': 'url("' + data.workTableImg + '")'
-			};
+			var img = new Image();
+			img.src = data.workTableImg;
+			img.onload = function(){
+				$scope.$apply(function(){
+					vm.workTableImg = {
+						'background-image': 'url("' + img.src + '")',
+						width: img.width + 'px',
+						height: img.height + 'px'
+					};
+				});
+				
+			}
 		});
 	};
 	vm.save = function(){

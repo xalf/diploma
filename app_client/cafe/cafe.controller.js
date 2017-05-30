@@ -9,7 +9,6 @@
 		
 		cafeData.getCafeById($routeParams.cafeid).then(function(data){
 			vm.cafe = data.data;
-			console.log(vm.cafe.timetable);
 		}, function(e){
 			vm.message = "Что-то пошло не так";
 		});
@@ -23,6 +22,16 @@
 					});
 					
 				});
+		};
+		
+		vm.popupOrder = function(){
+			var modalOrder = $uibModal.open({
+				templateUrl: '/orderModal/orderModal.view.html',
+				controller: 'orderModalCtrl as vm'
+			});
+			modalOrder.result.then(function(data){
+				console.log(data);
+			});
 		};
 		
 		vm.popupReviewForm = function(){

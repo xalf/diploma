@@ -23,6 +23,10 @@
 			vm.cafeForm = {};
 			vm.cafeForm.contacts = [];
 			vm.cafeForm.timetable = [{
+				number: 0,
+				name: 'Вс',
+				isChoice: false
+			},{
 				number: 1,
 				name: 'Пн',
 				isChoice: false
@@ -45,10 +49,6 @@
 			},{
 				number: 6,
 				name: 'Сб',
-				isChoice: false
-			},{
-				number: 7,
-				name: 'Вс',
 				isChoice: false
 			}];
 		});

@@ -108,9 +108,20 @@ a {
     display: block;
 }
 
+.rectangle:not(.active), .circle:not(.active){
+	cursor: no-drop;
+	background-color: #888;
+}
+.rectangle:not(.active) .popover, .circle:not(.active) .popover{
+	display: none !important;
+}
 .rectangle .popover, .circle .popover{
 	display: none;
-	left: 0;
+	left: 100%;
+	width: 180px;
+}
+.rectangle .popover .arrow, .circle .popover .arrow{
+	top: 20px;
 }
 
 .rectangle:hover .popover, .circle:hover .popover{

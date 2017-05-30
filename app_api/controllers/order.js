@@ -94,6 +94,7 @@ module.exports.addOrder = function(req, res){
 			cafeid: req.body.cafeid,
 			tableNumber: req.body.tableNumber
 		};
+		console.log(orderObj);
 		Order.create(orderObj,function(err, order){
 			if(err)
 				sendJsonResponse(res,404,err);

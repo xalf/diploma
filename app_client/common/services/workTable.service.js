@@ -17,10 +17,20 @@
 				});
 		};
 		
+		var createOrder = function(data){
+			if(authentication.isLoggedIn('client'))
+				return $http.post('/api/user/client/order', data, {
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				})
+		};
+		
 		return{
 			getWorkTableInfo: getWorkTableInfo,
 			getOrdersInfo: getOrdersInfo,
-			updateTablesList: updateTablesList
+			updateTablesList: updateTablesList,
+			createOrder: createOrder
 		};
 	}
 

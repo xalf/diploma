@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var timeSchema = new mongoose.Schema({
-	number: {type: Number, min: 1, max: 7, require: true},
+	number: {type: Number, min: 0, max: 6, require: true},
 	name: {type: String, require: true},
 	isChoice: {type: Boolean, "default": false},
 	openTime: Date,

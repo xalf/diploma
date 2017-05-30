@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Заказ столиков</title>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" href="/stylesheets/style.css">
 </head>
@@ -15,6 +16,9 @@
 	 <div ng-view="">
 	 	
 	 </div>
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-route/angular-route.min.js"></script>
   <script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
@@ -32,8 +36,7 @@
   <script src="/common/directive/navLogin/navLogin.controller.js"></script>
   <script src="/common/directive/workTable/workTable.js"></script>
   <script src="/common/directive/workTable/workTable.controller.js"></script>
-  <script src="/common/directive/orderTable/orderTable.js"></script>
-  <script src="/common/directive/orderTable/orderTable.controller.js"></script>
+  <script src="/orderModal/orderModal.controller.js"></script>
   
   <script src="/home/home.controller.js"></script>
   <script src="/reviewModal/reviewModal.controller.js"></script>
@@ -46,7 +49,6 @@
   <script src="/updateImageModal/updateImageModal.controller.js"></script>
   <script src="/setImageWorkTable/setImageWorkTable.controller.js"></script>
   
-  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
