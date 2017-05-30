@@ -51,6 +51,15 @@
 				});
 		};
 		
+		var updateImageCafe = function(){
+			if(authentication.isLoggedIn('admin'))
+				return $http.delete('/api/cafe/' + cafeid, {
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				});
+		};
+		
 		return{
 			getCafeList: getCafeList,
 			getCafeById: getCafeById,
@@ -58,7 +67,8 @@
 			deleteReviewById: deleteReviewById,
 			updateCafe: updateCafe,
 			deleteCafe: deleteCafe,
-			addCafe: addCafe
+			addCafe: addCafe,
+			updateImageCafe: updateImageCafe
 		};
 	}
 

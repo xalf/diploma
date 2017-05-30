@@ -6,7 +6,7 @@
     <uib-tab index="0" heading="Заказы">
     	<div class="row">
     		<div class="col-md-6">
-    			<h3>Заказы</h3>
+    			<h3>Все заказы</h3>
     			<table class="table table-striped" ng-show="vm.cafeid">
     				<tr>
     					<th>Дата</th>
@@ -14,11 +14,47 @@
     					<th>Номер столика</th>
     					<th>Заказчик</th>
     				</tr>
-    				<tr ng-repeat="order in vm.orders">
-    					<td>{{order.date | date: 'MM.dd' }}</td>
+    				<tr ng-repeat="order in vm.orders | orderBy: order.date | dateFilter: true">
+    					<td>{{order.date | date: 'dd.MM' }}</td>
     					<td>{{order.date | date: 'H:mm'}} - {{order.dateEnd | date:'H:mm'}}</td>
-    					<td>{{order.table.number}}</td>
-    					<td>{{order.customer}}</td>
+    					<td>{{order.tableNumber}}</td>
+    					<td>{{order.client}}</td>
+    				</tr>
+    			</table>
+    		</div>
+    		<div class="col-md-6">
+    			<h3>Заказы на сегодня</h3>
+    			<table class="table table-striped" ng-show="vm.cafeid">
+    				<tr>
+    					<th>Дата</th>
+    					<th>Время</th>
+    					<th>Номер столика</th>
+    					<th>Заказчик</th>
+    				</tr>
+    				<tr ng-repeat="order in vm.orders | orderBy: order.date | dateFilter">
+    					<td>{{order.date | date: 'dd.MM' }}</td>
+    					<td>{{order.date | date: 'H:mm'}} - {{order.dateEnd | date:'H:mm'}}</td>
+    					<td>{{order.tableNumber}}</td>
+    					<td>{{order.client}}</td>
+    				</tr>
+    			</table>
+    		</div>
+		</div>
+    	<div class="row">
+    		<div class="col-md-6">
+    			<h3>Архив заказов</h3>
+    			<table class="table table-striped" ng-show="vm.cafeid">
+    				<tr>
+    					<th>Дата</th>
+    					<th>Время</th>
+    					<th>Номер столика</th>
+    					<th>Заказчик</th>
+    				</tr>
+    				<tr ng-repeat="order in vm.orders | orderBy: order.date | dateFilter: false">
+    					<td>{{order.date | date: 'dd.MM' }}</td>
+    					<td>{{order.date | date: 'H:mm'}} - {{order.dateEnd | date:'H:mm'}}</td>
+    					<td>{{order.tableNumber}}</td>
+    					<td>{{order.client}}</td>
     				</tr>
     			</table>
     		</div>
@@ -124,6 +160,17 @@
 		  </div>
 		  <button class="btn btn-default" type="submit">Отправить</button>
 		</form>
+    </uib-tab>
+    <uib-tab index="3" heading="Изображение">
+    	<h3>Изображение кафе</h3>
+    	<div class="row">
+    		<div class="col-md-8" ng-show="vm.cafeForm.img">
+    			<img src="{{vm.cafeForm.img}}" class="img-responsive">
+    		</div>
+    		<div class="col-md-4">
+      			<button ng-click="vm.setImage()" class="btn btn-default">Обновить изображение</button>
+    		</div>
+    	</div>
     </uib-tab>
   </uib-tabset>
  </div>

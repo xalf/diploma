@@ -1,5 +1,5 @@
 (function(){
-	var adminCtrl = function($uibModal, cafeData, authentication){
+	var adminCtrl = function($uibModal, cafeData, authentication, workTableService){
 		var vm = this;
 		
 		var emptyContact = {
@@ -7,6 +7,8 @@
 			name: "",
 			isLink: false
 		};
+		
+		vm.today = new Date();
 		
 		//начальные значения
 		vm.newTimetable = {};
@@ -19,6 +21,13 @@
 			}, function(e){
 				console.log(e);
 			});
+			workTableService.getOrderByCafeId(vm.cafeid)
+				.then(function(data){
+					vm.orders = data.data;
+					console.log(data);
+				}, function(e){
+					console.log(e);
+				});
 		}, function(e){
 			vm.cafeForm = {};
 			vm.cafeForm.contacts = [];
@@ -91,30 +100,23 @@
 			else
 				cafeData.addCafe(vm.cafeForm);
 		};
-		
-		
-		//тестовые данные
-		var test = new Date();
-		vm.orders = [
-			{
-				table: {
-					number: 4
-				},
-				customer: "Коля",
-				date: test.setDate(test.getDate()+7),
-				dateEnd: test.setHours(test.getHours()+2)
-			},
-			{
-				table: {
-					number: 2
-				},
-				customer: "Вова",
-				date: test.setDate(test.getDate()-2),
-				dateEnd: test.setHours(test.getHours()+1)
-			}
-		];
+		vm.setImage = function(){
+			var modalUpdate = $uibModal.open({
+				templateUrl: '/updateCafeImageModal/updateImageModal.view.html',
+				controller: 'updateCafeImageModalCtrl as vm',
+				resolve: {
+					cafeid: function(){
+						return vm.cafeid;			  
+					}
+				}
+			});
+			modalUpdate.result.then(function(data){
+				vm.cafeForm.img = data;
+				console.log(data);
+			});
+		};
 	};
 
 	angular.module('cafeClientApp')
-		.controller("adminCtrl", ['$uibModal', 'cafeData', 'authentication', adminCtrl]);
+		.controller("adminCtrl", ['$uibModal', 'cafeData', 'authentication', 'workTableService', adminCtrl]);
 })();

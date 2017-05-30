@@ -1,5 +1,5 @@
 (function(){
-	var dashboardCtrl = function($location, $uibModal, cafeData, authentication){
+	var dashboardCtrl = function($location, $uibModal, cafeData, authentication, workTableService){
 		var vm = this; 
 		vm.clientLogin = authentication.isLoggedIn('client');
 		
@@ -26,39 +26,59 @@
 					$location.path("/");
 				});
 			};
-			var test = new Date();
-			vm.orders = [
-				{
-					cafe: "Перчини",
-					date: test.setDate(test.getDate()+7),
-					dateEnd: test.setHours(test.getHours()+4),
-					table: {
-						numberOfSeats: 3,
-						number: 2,
+			
+			vm.deleteOrder = function(order){
+				workTableService.deleteOrder(order.id).then(function(data){
+					for(i in vm.orders){
+						if(vm.orders[i].id === order.id){
+							vm.orders.splice(i, 1);
+							break;
+						}
 					}
-				},
-				{
-					cafe: "Перчини2",
-					date: test.setDate(test.getDate()+3),
-					dateEnd: test.setHours(test.getHours()+3),
-					table:{
-						numberOfSeats: 2,
-						number: 4,
-					}
-				},
-				{
-					cafe: "Перчини3",
-					date: test.setDate(test.getDate()-4),
-					dateEnd: test.setHours(test.getHours()+2),
-					table:{
-						numberOfSeats: 3,
-						number: 7,
-					}
-				}
-			];
+				}, function(e){
+					console.log(e);
+				});
+			};
+			
+			workTableService.getOrderByClientId(vm.user._id).then(function(data){
+					vm.orders = data.data;
+					console.log(data);
+				}, function(e){
+					console.log(e);
+				});
+//			var test = new Date();
+//			vm.orders = [
+//				{
+//					cafe: "Перчини",
+//					date: test.setDate(test.getDate()+7),
+//					dateEnd: test.setHours(test.getHours()+4),
+//					table: {
+//						numberOfSeats: 3,
+//						number: 2,
+//					}
+//				},
+//				{
+//					cafe: "Перчини2",
+//					date: test.setDate(test.getDate()+3),
+//					dateEnd: test.setHours(test.getHours()+3),
+//					table:{
+//						numberOfSeats: 2,
+//						number: 4,
+//					}
+//				},
+//				{
+//					cafe: "Перчини3",
+//					date: test.setDate(test.getDate()-4),
+//					dateEnd: test.setHours(test.getHours()+2),
+//					table:{
+//						numberOfSeats: 3,
+//						number: 7,
+//					}
+//				}
+//			];
 		} 
 	};
 
 	angular.module('cafeClientApp')
-		.controller("dashboardCtrl", ['$location', '$uibModal', 'cafeData', 'authentication', dashboardCtrl]);
+		.controller("dashboardCtrl", ['$location', '$uibModal', 'cafeData', 'authentication', 'workTableService', dashboardCtrl]);
 })();

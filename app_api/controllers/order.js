@@ -2,32 +2,37 @@ var mongoose = require("mongoose");
 var Order = mongoose.model('Order');
 var Table = mongoose.model('Table');
 var Cafe = mongoose.model('Cafe');
+var User = mongoose.model('User');
 
 module.exports.getOrdersByCafeId = function(req, res){
 	if(req.payload && req.payload.email && req.payload.type === 'admin'){
 		if(req.params && req.params.cafeid){
 			Order
 				.find({cafeid: req.params.cafeid})
-				.exec(function(err, order){
+				.exec(function(err, orders){
 					if(err)
 						sendJsonResponse(res, 404, err);
 					else{
-						var returnObj = [];
-						orders.forEach(function(item, i, arr){
-							Client
-								.findById(order.clientid)
-								.exec(function(err, client){
-									if(!err){
+						User.find().exec(function(err, clients){
+							if(err){
+								sendJsonResponse(res, 404, err);
+								return;
+							}
+							var returnObj = [];
+							for(var i = 0; i < orders.length; i++){
+								for(var j = 0; j < clients.length; j++){
+									if(clients[j]._id == orders[i].clientid){
 										returnObj.push({
-											client: client.name,
-											dateEnd: order.dateEnd,
-											date: order.date,
-											tableNumber: order. tableNumber
+											client: clients[j].name,
+											dateEnd: orders[i].dateEnd,
+											date: orders[i].date,
+											tableNumber: orders[i].tableNumber
 										});
 									}
-								});
+								}
+							}
+							sendJsonResponse(res, 200, returnObj);
 						});
-						sendJsonResponse(res, 200, returnObj);
 					}
 				});
 		} else {
@@ -53,22 +58,41 @@ module.exports.getOrdersByClientId = function(req, res){
 					if(err)
 						sendJsonResponse(res, 404, err);
 					else{
-						var returnObj = [];
-						orders.forEach(function(item, i, arr){
-							Cafe
-								.findById(item.cafeid)
-								.exec(function(err, cafe){
-									if(!err){
-										returnObj.push({
-											cafe: cafe.name,
-											dateEnd: item.dateEnd,
-											date: item.date,
-											tableNumber: item. tableNumber
-										});
+						Cafe.find().exec(function(err, cafes){
+							if(err){
+								sendJsonResponse(res, 404, err);
+								return;
+							}
+							Table.find().exec(function(err, tables){
+								if(err){
+									sendJsonResponse(res, 404, err);
+									return;
+								}
+								var returnObj = [];
+								for(var i = 0; i < orders.length; i++){
+									var one = {
+										id: orders[i]._id,
+										dateEnd: orders[i].dateEnd,
+										date: orders[i].date,
+										tableNumber: orders[i].tableNumber
+									};
+									for(var j = 0; j < cafes.length; j++){
+										if(cafes[j]._id == orders[i].cafeid){
+											one.cafe = cafes[j].name;
+										}
 									}
-								});
+									for(var j = 0; j < tables.length; j++){
+										if(tables[j].number === orders[i].tableNumber 
+										   && tables[j].cafeid === orders[i].cafeid){
+										   one.tableNumber = tables[j].number;
+										   one.numberOfSeats = tables[j].numberOfSeats;
+										}
+									}
+									returnObj.push(one);
+								}
+								sendJsonResponse(res, 200, returnObj);
 							});
-						sendJsonResponse(res, 200, returnObj);
+						});
 					}
 				});
 		} else {
@@ -94,12 +118,19 @@ module.exports.addOrder = function(req, res){
 			cafeid: req.body.cafeid,
 			tableNumber: req.body.tableNumber
 		};
-		console.log(orderObj);
 		Order.create(orderObj,function(err, order){
 			if(err)
 				sendJsonResponse(res,404,err);
 			else{
-				sendJsonResponse(res, 200, order);
+				Cafe.findById(req.body.cafeid).exec(function(err, cafe){
+					cafe.order += 1;
+					cafe.save(function(err, cafe){
+						if(err)
+							sendJsonResponse(res, 404, err);
+						else
+							sendJsonResponse(res, 200, order);
+					});
+				});
 			}
 				
 		});

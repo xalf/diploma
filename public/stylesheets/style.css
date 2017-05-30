@@ -1,14 +1,17 @@
 body {
-  padding: 50px;
-	padding-top: 100px;
+  padding: 50px 0;
+	padding-top: 70px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: #F5FFE1;
+	color: #2F4129;
 }
 .er404{
 	font-size: 100px;
 	
 }
 a {
-  color: #00B7FF;
+  color: #2F4129;
+	cursor: pointer;
 }
 #objects-area{
 	height: 400px;
@@ -108,7 +111,7 @@ a {
     display: block;
 }
 
-.rectangle:not(.active), .circle:not(.active){
+.order-table .rectangle:not(.active), .order-table .circle:not(.active){
 	cursor: no-drop;
 	background-color: #888;
 }
@@ -127,4 +130,108 @@ a {
 .rectangle:hover .popover, .circle:hover .popover{
 	position: absolute;
 	display: block;
+}
+.selected{
+	background-color: #d68884;
+	opacity: 1;	
+}
+.glyphicon-remove:hover{
+	cursor: pointer;	
+}
+.cafe-preview{
+	margin: 10px;
+}
+.cafe-preview__img{
+	background-position: 50% 50%;
+	-webkit-background-size: cover;
+	background-size: cover;
+	padding: 0;
+	height: 240px;
+}
+.cafe-preview__info{
+	background-color: rgba(204, 136, 102, 0.8);
+	color: #fff;
+	display: none;
+	height: 100%;
+	font-size: 17px;
+	padding: 10px 15px;
+}
+.cafe-preview__img:hover .cafe-preview__info{
+	display: block;
+}
+.cafe-preview__title{
+	background-color: #D14335;
+	padding: 10px;
+	height: 50px;
+}
+.cafe-preview__title a, .cafe-preview__title span{
+	color: #fff;
+	font-size: 18px;
+	text-transform: capitalize;
+}
+.panel-primary .panel-heading {
+	background-color: #D14335;
+	border-color: #D14335;
+}
+.panel-primary{
+	border-color: #D14335;
+}
+header{
+	background-color: #527147;
+	color: #fff;
+}
+header a, header a:hover, header a:focus{
+	color: #fff;
+}
+.nav > li > a:hover, .nav > li > a:focus{
+	background-color: #527147;
+	text-decoration: underline;
+}
+.form-control:focus {
+    border-color: #527147;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82, 113, 71, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82, 113, 71, 0.6);
+}
+.cafe-full{
+	background-position: 100% 50%;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+.page-header{
+	border-bottom: none;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #fff;
+}
+.nav-tabs a:hover{
+	color: #fff;
+	text-decoration: none;
+}
+.action-menu{
+	background-color: #2F4129;
+}
+.action-menu a{
+	color: #fff;
+}
+.action-menu a:hover{
+	text-decoration: none !important;
+}
+.action-menu label{
+	color: #fff;
+	font-weight: 300;
+	margin: 15px;
+	line-height: 20px;
+}
+.form-control_mini{
+	width: 50px;
+	display: inline-block;
+}
+.cafe-full_info{
+	background-color: rgba(245, 255, 225, 0.6);
+	margin-top: 20px;
+}
+.top{
+	margin-top: 15px;
 }

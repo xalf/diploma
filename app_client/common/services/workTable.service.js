@@ -26,11 +26,41 @@
 				})
 		};
 		
+		var getOrderByCafeId = function(cafeid){
+			if(authentication.isLoggedIn('admin'))
+				return $http.get('/api/user/admin/' + cafeid, {
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				})
+		};
+		
+		var getOrderByClientId = function(clientid){
+			if(authentication.isLoggedIn('client'))
+				return $http.get('/api/user/client/' + clientid,  {
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				})
+		};
+		
+		var deleteOrder = function(orderid){
+			if(authentication.isLoggedIn('client'))
+				return $http.delete('/api/user/client/order/' + orderid,  {
+					headers: {
+						Authorization: 'Bearer '+authentication.getToken()
+					}
+				})
+		};
+		
 		return{
 			getWorkTableInfo: getWorkTableInfo,
 			getOrdersInfo: getOrdersInfo,
 			updateTablesList: updateTablesList,
-			createOrder: createOrder
+			createOrder: createOrder,
+			getOrderByClientId: getOrderByClientId,
+			getOrderByCafeId: getOrderByCafeId,
+			deleteOrder: deleteOrder
 		};
 	}
 

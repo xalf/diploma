@@ -1,5 +1,7 @@
+<div class="alert alert-danger" ng-show="wtvm.error">Ошибка! Неверно заполнены данные о столиках</div>
+<div class="alert alert-success" ng-show="wtvm.success">Данные сохранены успешно</div>
 <div id="work-table">
-  <div class="navbar action-menu navbar-inverse">
+  <div class="navbar action-menu">
 	  <ul class="nav navbar-nav">
 		  <li>
 			<a ng-click="wtvm.addRectangle()">Прямоугольный столик</a>
@@ -19,18 +21,15 @@
 		  <li>
 			<a ng-click="wtvm.save()">Сохранить</a>
 		  </li>
+		  <li class="pull-right">
+		  	<label for="">Количество мест:</label>
+			<input type="text" ng-model="wtvm.focusObj.numberOfSeats" class="form-control form-control_mini">
+		  </li>
+		  <li class="pull-right">
+		  	<label for="">Номер столика:</label>
+			<input type="text" ng-model="wtvm.focusObj.index" class="form-control form-control_mini">
+		  </li>
 	  </ul>
-	  <div class="well pull-right">
-	  	<h6>Информация о столике {{wtvm.focusObj.index}}</h6>
-	  	<div>
-			<label for="">Количество мест:</label>
-			<input type="text" ng-model="wtvm.focusObj.numberOfSeats" class="form-control">
-	  	</div>
-	  	<div>
-			<label for="">Номер столика:</label>
-			<input type="text" ng-model="wtvm.focusObj.index" class="form-control" tooltip-placement="bottom" uib-tooltip="Не уникальный номер столика" tooltip-is-open="!wtvm.isUnique(wtvm.focusObj)">
-	  	</div>
-	  </div>
   </div>
   <div id="objects-area" class="container" ng-mousedown="wtvm.workTableMousedown($event)" ng-style="wtvm.workTableImg" ng-mouseup="wtvm.del()">
       <div id="select-frame" ng-style="wtvm.sFrame.sFrameStyle | formatStyle" ng-class="wtvm.sFrame.classes" ng-mousedown="wtvm.sFrame.mousedown($event)">

@@ -27,7 +27,8 @@
 		vm.popupOrder = function(){
 			var modalOrder = $uibModal.open({
 				templateUrl: '/orderModal/orderModal.view.html',
-				controller: 'orderModalCtrl as vm'
+				controller: 'orderModalCtrl as vm',
+				size: 'lg'
 			});
 			modalOrder.result.then(function(data){
 				console.log(data);

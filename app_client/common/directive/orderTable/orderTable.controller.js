@@ -42,6 +42,8 @@ var orderTableCtrl = function($scope, $routeParams, coordsService, authenticatio
 	
 	cafeData.getCafeById($routeParams.cafeid).then(function(data){
 		vm.timetable = data.data.timetable;
+		console.log('vm.timetable');
+		console.log(vm.timetable);
 		
 		$scope.dateOptions = {
 			dateDisabled: disabled,
@@ -182,6 +184,7 @@ var orderTableCtrl = function($scope, $routeParams, coordsService, authenticatio
 			workTableService
 				.getOrdersInfo($routeParams.cafeid)
 				.then(function(res){
+				console.log(res.data);
 					vm.figures.forEach(function(item, i, arr){
 						var number = item.index;
 						for(j in res.data){

@@ -6,8 +6,8 @@ var orderModalCtrl = function($uibModalInstance, $scope, $routeParams, coordsSer
 		cancel: function(){
 			$uibModalInstance.dismiss('cancel');
 		},
-		close: function(data){
-			$uibModalInstance.close(data);
+		close: function(){
+			$uibModalInstance.close();
 		} 
 	};
 	vm.onSubmit = function(){
@@ -50,9 +50,11 @@ var orderModalCtrl = function($uibModalInstance, $scope, $routeParams, coordsSer
 	vm.order.date = today;
 	
 	var user = authentication.currentUser();
-	
+	console.log($routeParams.cafeid);
 	cafeData.getCafeById($routeParams.cafeid).then(function(data){
 		vm.timetable = data.data.timetable;
+		console.log('vm.timetable');
+		console.log(vm.timetable);
 		
 		$scope.dateOptions = {
 			dateDisabled: disabled,
@@ -145,7 +147,7 @@ var orderModalCtrl = function($uibModalInstance, $scope, $routeParams, coordsSer
 	
 	vm.onSubmit = function(){
 		var start = vm.order.date,
-			stop = vm.order.date;
+			stop = vm.order.end;
 		
 		start.setHours(vm.order.start.getHours());
 		start.setMinutes(vm.order.start.getMinutes());
@@ -159,8 +161,10 @@ var orderModalCtrl = function($uibModalInstance, $scope, $routeParams, coordsSer
 			tableNumber: vm.order.table.index,
 			clientid: user._id
 		};
+		console.log(reqObj);
 		workTableService.createOrder(reqObj).then(function(data){
 			
+			vm.modal.close();
 		});
 	};
 	

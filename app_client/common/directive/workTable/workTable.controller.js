@@ -226,7 +226,10 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 			console.log(e);
 		});
 
-	vm.workTableImg = {};
+	vm.workTableImg = {}; 
+	
+	vm.error = false;
+	vm.success = false;
 
 	vm.workTableMousedown = function(e){ 
 		vm.sFrame.sFrameStyle.height = 0;
@@ -336,8 +339,15 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 		});
 	};
 	vm.save = function(){
+		vm.error = false;
+		vm.success = false;
 		var resObj = [];
+		
 		vm.figures.forEach(function(item, i, arr){
+			if(!item.index && !vm.isUnique(item) && item.numberOfSeats <= 0){
+				vm.error = true;
+				return;
+			}
 			var fig = {
 				number: item.index,
 				numberOfSeats: item.numberOfSeats,
@@ -350,8 +360,9 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 			};
 			resObj.push(fig);
 		});
-		workTableService.updateTablesList(cafeid, resObj)
-			.then(function(data){console.log('success');}, function(e){console.log(e);});
+		if(!vm.error)
+			workTableService.updateTablesList(cafeid, resObj)
+			.then(function(data){vm.success = true;}, function(e){console.log(e);});
 	};
 	vm.resize = function(figure, $event, param1, param2){
 		$event.stopPropagation();

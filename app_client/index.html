@@ -9,10 +9,12 @@
 	<link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-	 <nav class="navbar navbar-default navbar-fixed-top clearfix">
-		 <h1><a href="/" class="pull-left">Заказ столиков</a></h1>
-		<nav-login class="pull-right"></nav-login>
-	</nav>
+	 <header class="navbar-fixed-top clearfix ">
+		 <div class="container">
+			 <h1><a href="/" class="pull-left">Заказ столиков</a></h1>
+			<nav-login class="pull-right"></nav-login>
+		</div>
+	</header>
 	 <div ng-view="">
 	 	
 	 </div>
@@ -22,6 +24,7 @@
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/bower_components/angular-route/angular-route.min.js"></script>
   <script src="/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+  <script src="/bower_components/moment/moment.js"></script>
   <script src="/ui-bootstrap-custom-build/ui-bootstrap-custom-2.5.0.min.js"></script>
   <script src="/ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-2.5.0.min.js"></script>
   
@@ -31,6 +34,7 @@
   <script src="/common/services/workTable.service.js"></script>
   <script src="/common/services/random.js"></script>
   <script src="/common/services/coords.js"></script>
+  <script src="/common/dateFilter.js"></script>
   <script src="/common/directive/ratingStars/rating-stars.js"></script>
   <script src="/common/directive/navLogin/navLogin.js"></script>
   <script src="/common/directive/navLogin/navLogin.controller.js"></script>
@@ -47,6 +51,7 @@
   <script src="/dashboard/dashboard.controller.js"></script>
   <script src="/deleteUserModal/deleteUserModal.controller.js"></script>
   <script src="/updateImageModal/updateImageModal.controller.js"></script>
+  <script src="/updateCafeImageModal/updateImageModal.controller.js"></script>
   <script src="/setImageWorkTable/setImageWorkTable.controller.js"></script>
   
   <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

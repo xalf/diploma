@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body">
 	<div id="objects-area" ng-style="vm.workTableImg">
-	  <div ng-repeat="figure in vm.figures track by $index" ng-class="{circle: figure.type=='circle', rectangle: figure.type == 'rectangle', active: figure.active}" ng-style="figure.style | formatStyle" ng-click="vm.selectionTable(figure)" class="fig">
+	  <div ng-repeat="figure in vm.figures track by $index" ng-class="{circle: figure.type=='circle', rectangle: figure.type == 'rectangle', active: figure.active, selected: figure === vm.order.table}" ng-style="figure.style | formatStyle" ng-click="vm.selectionTable(figure)" class="fig">
 		  <div class="popover fade right in" role="tooltip">
 			  <div class="arrow"></div>
 			  <div class="popover-content">
@@ -21,7 +21,7 @@
 		<button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
 	  </span>
 	</div>
-	<p>{{otvm.order.start | date: 'H:mm'}}:{{otvm.order.end | date: 'H:mm'}}</p>
+	<p>{{vm.order.start | date: 'H:mm'}}:{{vm.order.end | date: 'H:mm'}}</p>
 	<div id="slider-range"></div>
   </div>
   <div class="modal-footer">

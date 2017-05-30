@@ -1,4 +1,4 @@
-<div id="objects-area" ng-style="otvm.workTableImg">
+<div id="objects-area" ng-style="otvm.workTableImg" class="order-table">
   <div ng-repeat="figure in otvm.figures track by $index" ng-class="{circle: figure.type=='circle', rectangle: figure.type == 'rectangle', active: figure.active}" ng-style="figure.style | formatStyle" ng-click="otvm.selectionTable(figure)" class="fig">
 	  <div class="popover fade right in" role="tooltip">
 		  <div class="arrow"></div>

@@ -1,0 +1,16 @@
+<div class="modal-content">
+  <form role="form" class="form-horizontal" ng-submit="vm.onSubmit()">
+    <div class="modal-header">
+      <button type="button" ng-click="vm.modal.cancel()" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <h4 id="myModalLabel" class="modal-title">Изменение фотографии</h4>
+    </div>
+    <div class="modal-body">
+      <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
+      <input type="file" nv-file-select="" uploader="vm.uploader" />
+    </div>
+    <div class="modal-footer">
+      <button ng-click="vm.modal.cancel()" type="button" class="btn btn-default">Отмена</button>
+      <button type="submit" class="btn btn-primary">Отправить</button>
+    </div>
+  </form>
+</div>

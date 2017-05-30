@@ -10,16 +10,35 @@
 				<p><a href="" ng-click="vm.updateProfile()">Изменить фотографию</a> / <a ng-click="vm.deleteProfile()" href="">Удалить профиль</a></p>
 			</div>
 			<div class="col-md-9">
-				<h2>Заказанные столики</h2>
+				<h3>Заказанные столики</h3>
 				<table class="table table-striped">
-					<tr ng-repeat="order in vm.orders | orderBy: order.date">
+					<tr ng-repeat="order in vm.orders | orderBy: order.date | dateFilter: true">
 						<td>
 							<h4>{{order.cafe}}</h4>
-							<small>столик №{{order.table.number}} на {{order.table.numberOfSeats}} человек</small>
+							<small>столик №{{order.tableNumber}} на {{order.numberOfSeats}} человек</small>
 						</td>
 						<td>
-							<h4>{{order.date | date: 'H:m'}} - {{order.dateEnd | date:'H:m'}}</h4>
+							<h4>{{order.date | date: 'HH:mm'}} - {{order.dateEnd | date:'HH:mm'}}</h4>
 							<small>{{order.date | date: 'MM.dd' }}</small>
+						</td>
+						<td>
+							<span class="glyphicon glyphicon-remove" ng-click="vm.deleteOrder(order)"></span>
+						</td>
+					</tr>
+				</table>
+				<h3>Архив заказов</h3>
+				<table class="table table-striped">
+					<tr ng-repeat="order in vm.orders | orderBy: order.date | dateFilter: false">
+						<td>
+							<h4>{{order.cafe}}</h4>
+							<small>столик №{{order.tableNumber}} на {{order.numberOfSeats}} человек</small>
+						</td>
+						<td>
+							<h4>{{order.date | date: 'HH:mm'}} - {{order.dateEnd | date:'HH:mm'}}</h4>
+							<small>{{order.date | date: 'MM.dd' }}</small>
+						</td>
+						<td>
+							<span class="glyphicon glyphicon-remove" ng-click="vm.deleteOrder(order)"></span>
 						</td>
 					</tr>
 				</table>
