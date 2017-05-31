@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var tableSchema = new mongoose.Schema({
 	number: {type: Number, require: true},
-	numberOfSeats: {},
+	numberOfSeats: Number,
 	cafeid: {type: String, require: true},
 	width: Number,
 	height: Number,

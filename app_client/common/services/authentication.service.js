@@ -1,7 +1,6 @@
 (function(){
 	var authentication = function($window, $http){
 		var saveToken = function(token){
-			console.log(token);
 			$window.localStorage['token'] = token;
 		}
 		

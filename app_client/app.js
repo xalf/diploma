@@ -4,9 +4,9 @@
 	angular.module('cafeClientApp')
 		.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider){
 			$locationProvider.html5Mode({
-  enabled: true,
-  requireBase: false
-});
+			  enabled: true,
+			  requireBase: false
+			});
 			$routeProvider
 				.when('/',{
 					templateUrl: '/home/home.view.html',

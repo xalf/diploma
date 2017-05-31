@@ -42,13 +42,6 @@ module.exports.register = function(req, res){
 				client.save(saveType);
 			}
 			if(req.body.type === 'admin'){
-				/*console.log("admin");
-				console.log(user._id);
-				var admin = new Admin();
-				admin.userid = user._id;
-				console.log(admin.userid);
-				console.log(admin);
-				admin.save(saveType);*/
 				var obj = {
 					userid: id,
 					cafeid: ""
