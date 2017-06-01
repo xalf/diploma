@@ -46,36 +46,6 @@
 				}, function(e){
 					console.log(e);
 				});
-//			var test = new Date();
-//			vm.orders = [
-//				{
-//					cafe: "Перчини",
-//					date: test.setDate(test.getDate()+7),
-//					dateEnd: test.setHours(test.getHours()+4),
-//					table: {
-//						numberOfSeats: 3,
-//						number: 2,
-//					}
-//				},
-//				{
-//					cafe: "Перчини2",
-//					date: test.setDate(test.getDate()+3),
-//					dateEnd: test.setHours(test.getHours()+3),
-//					table:{
-//						numberOfSeats: 2,
-//						number: 4,
-//					}
-//				},
-//				{
-//					cafe: "Перчини3",
-//					date: test.setDate(test.getDate()-4),
-//					dateEnd: test.setHours(test.getHours()+2),
-//					table:{
-//						numberOfSeats: 3,
-//						number: 7,
-//					}
-//				}
-//			];
 		} 
 	};
 

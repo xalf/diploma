@@ -165,7 +165,7 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 			$event.stopPropagation();
 
 			areaPosition.update();
-			var sFramePosition = new coordsService($event.srcElement, areaPosition);
+			var sFramePosition = new coordsService($event.target, areaPosition);
 
 			var downCoords = coords($event);
 			this.shiftY = downCoords.y - sFramePosition.y;
@@ -382,7 +382,7 @@ var workTableCtrl = function($scope, $document, $uibModal, random, coordsService
 		$document.off('mousemove');
 	};
 	var changeFocus = function(obj){
-		if(vm.focusObj != undefined){
+		if(	vm.focusObj != undefined){
 			vm.focusObj.setFocus(false);
 			vm.focusObj.delete();
 		}
