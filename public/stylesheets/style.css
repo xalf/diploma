@@ -164,9 +164,14 @@ a {
 	padding: 10px;
 	height: 50px;
 }
+.cafe-preview__title a{
+	max-width: 60%;
+	overflow: hidden;
+	display: inline-block;	
+}
 .cafe-preview__title a, .cafe-preview__title span{
 	color: #fff;
-	font-size: 18px;
+	font-size: 17px;
 	text-transform: capitalize;
 }
 .panel-primary .panel-heading {

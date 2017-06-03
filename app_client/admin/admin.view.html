@@ -16,7 +16,7 @@
     				</tr>
     				<tr ng-repeat="order in vm.orders | orderBy: order.date | dateFilter: true">
     					<td>{{order.date | date: 'dd.MM' }}</td>
-    					<td>{{order.date | date: 'H:mm'}} - {{order.dateEnd | date:'H:mm'}}</td>
+    					<td>{{order.date | date: 'HH:mm'}} - {{order.dateEnd | date:'HH:mm'}}</td>
     					<td>{{order.tableNumber}}</td>
     					<td>{{order.client}}</td>
     				</tr>

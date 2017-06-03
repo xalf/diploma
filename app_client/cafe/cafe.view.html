@@ -37,7 +37,7 @@
 				<div class="panel-body">
 				 <p ng-repeat="time in vm.cafe.timetable | filter: !time.isChoice">
 					  {{time.name}}:
-					  {{time.openTime | date: 'hh:mm'}} - {{time.closeTime | date: 'hh:mm'}}
+					  {{time.openTime | date: 'HH:mm'}} - {{time.closeTime | date: 'HH:mm'}}
 				 </p>
 				</div>
 				</div>

@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-sm-12" ng-hide="vm.islogin">
-			<p class="lead">Если вы ущё не зарегистрированы: <a href="/#register&page={{vm.returnPage}}">Регистрация в приложении</a></p>
+			<p class="lead top">Если вы ущё не зарегистрированы: <a href="/#register&page={{vm.returnPage}}">Регистрация в приложении</a></p>
 			<form ng-submit="vm.onSubmit()">
 				<div class="alert alert-danger" role="alert" ng-show="vm.formError">{{vm.formError}}</div>
 				<div class="form-group">
